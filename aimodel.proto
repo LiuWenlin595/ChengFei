@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+message Env{
+	message Entity{
+		message Dof{
+			double lat = 1;
+			double lon = 2;
+			double height = 3;
+			double phi = 4;
+			double theta = 5;
+			double psi = 6;
+		}
+		message Velocity3D{
+			double vel_north = 1;
+			double vel_east = 2;
+			double vel_down = 3;
+		}
+		Dof dof = 1;
+		Velocity3D vel = 2;
+		int32 id = 3;
+	}
+	message Missle{
+		int32 id = 1;
+		double dist = 2;
+		double dir = 3;
+	}
+
+	double reward = 1;
+	bool done = 2;
+
+	Entity self = 3;
+	int32 num_wpn = 4;
+	Missle missle = 5;
+	Entity enemy = 6;
+}
+
+
+message Action{
+	message TrajPoint{
+		double lat = 1;
+		double lon = 2;
+		double h = 3;
+		double vel = 4;
+		double ref_phi = 5;
+	}
+	bool isReset = 1;
+
+	TrajPoint point = 2;
+
+	bool deploy = 3;
+	int32 target_id = 4;
+}

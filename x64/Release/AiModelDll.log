@@ -1,0 +1,11 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output 目录未以斜杠结尾。  此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Output 目录。
+  demodl.cpp
+c:\skyline\platformcode\project_611_ai_combat\code\group_evolution\aimodeldll\demodll.h(120): warning C4267: “参数”: 从“size_t”转换到“uint32_t”，可能丢失数据
+c:\skyline\platformcode\project_611_ai_combat\code\group_evolution\aimodeldll\demodll.h(126): warning C4267: “参数”: 从“size_t”转换到“uint32_t”，可能丢失数据
+c:\skyline\platformcode\project_611_ai_combat\code\group_evolution\aimodeldll\demodll.h(156): warning C4267: “参数”: 从“size_t”转换到“uint32_t”，可能丢失数据
+c:\skyline\platformcode\project_611_ai_combat\code\group_evolution\aimodeldll\demodll.h(179): warning C4267: “参数”: 从“size_t”转换到“uint32_t”，可能丢失数据
+    正在创建库 C:\skyline\skln_working\SyncData\config_files\tacai\AiModelDll.lib 和对象 C:\skyline\skln_working\SyncData\config_files\tacai\AiModelDll.exp
+  正在生成代码
+  All 23 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  AiModelDll.vcxproj -> C:\skyline\skln_working\SyncData\config_files\tacai\AiModelDll.dll

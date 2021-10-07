@@ -48,7 +48,7 @@ public:
 
 	TacThreatingMissile g_threat; // 导弹信息
 	bool g_done;				  // 是否该局结束
-	int periodCount;
+	//int periodCount;	// 输出文件判断是否C++在运行
 
 	bool FIRST; // 是否是开局第一帧
 	zmq::context_t context;
@@ -80,7 +80,7 @@ public:
 		target_attacked = false;
 		last_time = (clock_t)0;
 
-		periodCount = 0;
+		//periodCount = 0;
 
 		e = std::default_random_engine(std::time(0));
 		u = std::uniform_real_distribution<float>(0, 1); // 0~1的均匀分布
@@ -202,8 +202,6 @@ public:
 		env->set_allocated_self(self);
 		env->set_num_wpn(situation->self.num_wpn);
 
-		// enemy: target_list / situation.enemy
-		// missle: threat
 		if (situation->target_list.num_enemies > 0)
 		{
 			Env_Entity *enemy = base2entity(situation->target_list.enemies[0]);
@@ -215,7 +213,9 @@ public:
 			Env_Missle *missle = new Env_Missle();
 			missle->set_dir(g_threat.missile_dir);
 			missle->set_dist(g_threat.missile_dist);
+			env->set_allocated_missle(missle);
 		}
+
 		return env;
 	}
 
@@ -229,24 +229,24 @@ public:
 		socket.send(zmq::buffer(env_msg), zmq::send_flags::none);
 	}
 
-	// 把加了done和reward的env转成state传给model
+	// 把加了done和dist的env转成state传给model
 	void send_step(TacSdkSituationUpdate *situation)
 	{
 		Env *env = get_state_env(situation);
 
 		// reward, done
 		env->set_done(g_done);
-		float lon = situation->self.base.dof.lon * 1000;
-		float lat = situation->self.base.dof.lat * 1000;
-		float reward = pow((lon - g_goal_x * 1000), 2) + pow((lat - g_goal_y * 1000), 2);
-		env->set_reward(sqrt(reward));
+		float lon = situation->self.base.dof.lon;
+		float lat = situation->self.base.dof.lat;
+		float reward = sqrt(pow((lon - g_goal_x) * 1000, 2) + pow((lat - g_goal_y) * 1000, 2));
+		env->set_reward(reward);
 
 		string env_msg;
 		env->SerializeToString(&env_msg);
 		socket.send(zmq::buffer(env_msg), zmq::send_flags::none);
 	}
 
-	// 得到DFS的situation并做一步决策
+	// 接收model传过来的action并执行, 然后把state传回给model
 	void step(TacSdkSituationUpdate *situation, uint64_t tick)
 	{
 		// 保存TAC_SDK传入的态势中的本机数据
@@ -258,15 +258,10 @@ public:
 		// 开启雷达
 		turn_on_radar(tick);
 
-		//clock_t start, end;
-		periodCount++;
+		//periodCount++;
 		if (is_redgrp())
 		{
-			//std::cout << tick << std::endl;
 			/*红方 - 攻击方*/
-			//if (tick % 500 == 0)
-			//std::cout << tick << std::endl;
-
 			if (cnt > 0)
 			{
 				cnt--;
@@ -276,20 +271,17 @@ public:
 			Action action;
 			zmq::message_t request;
 
-			out << "red period:" << periodCount << std::endl;
+			//out << "red period:" << periodCount << std::endl;
 			if (FIRST)
 			{
-				//std::cout << "first" << std::endl;
 				context = zmq::context_t{1};
 				socket = zmq::socket_t{context, zmq::socket_type::rep};
 				items[0] = {socket, 0, ZMQ_POLLIN, 0};
 				socket.bind("tcp://*:5555");
-				//std::cout << "bind tcp://*:5555" << std::endl;
 
 				socket.recv(request, zmq::recv_flags::none); // 接收reset
 				action.ParseFromString(request.to_string());
 
-				//std::cout << "reset send state" << std::endl;
 				send_state(situation);
 
 				if (self.base.dof.lon < BlueX - 0.5)
@@ -325,8 +317,6 @@ public:
 				send_step(situation);
 				out << "red send step done ..." << std::endl;
 			}
-			////zmq_poll(items, 1, 1);
-			//if (items[0].revents & ZMQ_POLLIN) {
 			socket.recv(request, zmq::recv_flags::none); // 接收action
 			action.ParseFromString(request.to_string());
 
@@ -410,8 +400,6 @@ public:
 			// 蓝方围绕防守区域环飞，注意经纬坐标和长度的单位 和 red红方经纬坐标
 			if (FIRST)
 			{
-				//g_goal_x = BlueX;
-				//g_goal_y = BlueY - GoalRadius;
 				if (self.base.dof.psi < 45)
 				{
 					std::cout << "下方" << std::endl;
@@ -476,7 +464,7 @@ public:
 			std::cout << "蓝方与目标点距离：" << dis_blue_goal << std::endl;
 			//dis_br = sqrt(pow(blue_lat - red_lat, 2) + pow(blue_lon - red_lon, 2)); // red_lat 和 red_lon
 
-			out << "blue period: " << periodCount << std::endl;
+			//out << "blue period: " << periodCount << std::endl;
 
 			if (g_done)
 			{
@@ -572,10 +560,11 @@ public:
 		}
 		printf("enemies pos:%lf\n", situation->enemies[0].base.dof.lat);
 		//模拟判断是否进入有效攻击距离。
-		double dist = abs(self.base.dof.lat - situation->enemies[0].base.dof.lat);
+		double delta_lat = abs(self.base.dof.lat - situation->enemies[0].base.dof.lat);
+		double delta_lon = abs(self.base.dof.lon - situation->enemies[0].base.dof.lon);
+		double dist = sqrt(pow(delta_lat, 2) + pow(delta_lon, 2));
 		if (dist < 0.3)
 		{
-			//std::cout << "deploy" << std::endl;
 			tac_entity->Deploy(tac_entity,
 							   self.wpn_list[0].wpn_id,
 							   situation->target_list.enemies[0].id.carrier_id,
@@ -590,12 +579,7 @@ public:
 	//TacSdkAiRet notify_combat_finished() {
 	void notify_combat_finished()
 	{
-		//std::cout << "notify finish. periodCount:" << periodCount << std::endl;
-		//char msg[256] = { 0 };
-		//snprintf(msg, 256, "AI:%d detected dead ac.", self.base.id.carrier_id);
-		//tac_entity->SendSchedulerMsg(tac_entity, (void *)msg, strlen(msg) + 1);
 		g_done = true;
-		//return TSAIRET_HALT;
 	}
 
 	// 打开雷达
@@ -611,21 +595,16 @@ public:
 		radar_on = true;
 	}
 
-	// 发现敌机并选定攻击目标
+	// 发现敌机并选定攻击目标, 只能攻击一次
 	void target_found(TacSdkTargetList *tgt)
 	{
 		if (target_reported)
 		{
 			return;
 		}
-		//if (!is_redgrp()) {
-		//	//模拟红方攻击蓝方
-		//	return;
-		//}
 		// 发现简单攻击
 		if (tgt->num_enemies > 0 && !target_reported)
 		{
-			//std::cout << "found target " << "num:" << tgt->num_enemies << std::endl;
 			target_reported = true;
 		}
 
@@ -641,11 +620,6 @@ public:
 	// 发现威胁的处理
 	void threat_detected(TacThreatingMissile *missile)
 	{
-		//if (threat_reported) {
-		//	return;
-		//}
-		//std::cout << "threat" << std::endl;
-		//std::cout << "id: " << missile->missile_id << std::endl << "dist:" << missile->missile_dist << std::endl << "dir:" << missile->missile_dir << std::endl;
 		g_threat.missile_dist = missile->missile_dist;
 		g_threat.missile_dir = missile->missile_dir;
 		g_threat.missile_id = missile->missile_id;

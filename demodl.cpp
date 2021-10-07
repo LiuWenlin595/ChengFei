@@ -28,12 +28,9 @@ TacSdkAiRet _step(TacSdkAi *ai, uint64_t tick_cnt, double interval, TacSdkSituat
 		exit(123);
 	}
 	
-	// 通过返回HALT的方式，通知训练结束。
+	// 死亡, done设为True
 	if (!situation->self.base.is_alive) {
-		//我方已经被击落，打0分。
-		//本次对抗仿真结束，返回HALT
 		ins->ai_wrapper.notify_combat_finished();
-		//return ins->ai_wrapper.notify_combat_finished();
 	}
 
 	//根据TacSdkSituationUpdate内容,做相应处理.

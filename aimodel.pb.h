@@ -46,7 +46,7 @@ struct TableStruct_aimodel_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[7]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[8]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -71,6 +71,9 @@ extern Env_Entity_DofDefaultTypeInternal _Env_Entity_Dof_default_instance_;
 class Env_Entity_Velocity3D;
 struct Env_Entity_Velocity3DDefaultTypeInternal;
 extern Env_Entity_Velocity3DDefaultTypeInternal _Env_Entity_Velocity3D_default_instance_;
+class Env_Goal;
+struct Env_GoalDefaultTypeInternal;
+extern Env_GoalDefaultTypeInternal _Env_Goal_default_instance_;
 class Env_Missle;
 struct Env_MissleDefaultTypeInternal;
 extern Env_MissleDefaultTypeInternal _Env_Missle_default_instance_;
@@ -81,6 +84,7 @@ template<> ::Env* Arena::CreateMaybeMessage<::Env>(Arena*);
 template<> ::Env_Entity* Arena::CreateMaybeMessage<::Env_Entity>(Arena*);
 template<> ::Env_Entity_Dof* Arena::CreateMaybeMessage<::Env_Entity_Dof>(Arena*);
 template<> ::Env_Entity_Velocity3D* Arena::CreateMaybeMessage<::Env_Entity_Velocity3D>(Arena*);
+template<> ::Env_Goal* Arena::CreateMaybeMessage<::Env_Goal>(Arena*);
 template<> ::Env_Missle* Arena::CreateMaybeMessage<::Env_Missle>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
@@ -756,6 +760,160 @@ class Env_Missle final :
 };
 // -------------------------------------------------------------------
 
+class Env_Goal final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Env.Goal) */ {
+ public:
+  inline Env_Goal() : Env_Goal(nullptr) {}
+  ~Env_Goal() override;
+  explicit constexpr Env_Goal(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Env_Goal(const Env_Goal& from);
+  Env_Goal(Env_Goal&& from) noexcept
+    : Env_Goal() {
+    *this = ::std::move(from);
+  }
+
+  inline Env_Goal& operator=(const Env_Goal& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Env_Goal& operator=(Env_Goal&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Env_Goal& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Env_Goal* internal_default_instance() {
+    return reinterpret_cast<const Env_Goal*>(
+               &_Env_Goal_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(Env_Goal& a, Env_Goal& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Env_Goal* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Env_Goal* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Env_Goal* New() const final {
+    return new Env_Goal();
+  }
+
+  Env_Goal* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Env_Goal>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const Env_Goal& from);
+  void MergeFrom(const Env_Goal& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Env_Goal* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Env.Goal";
+  }
+  protected:
+  explicit Env_Goal(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kLatFieldNumber = 1,
+    kLonFieldNumber = 2,
+    kHeightFieldNumber = 3,
+  };
+  // double lat = 1;
+  void clear_lat();
+  double lat() const;
+  void set_lat(double value);
+  private:
+  double _internal_lat() const;
+  void _internal_set_lat(double value);
+  public:
+
+  // double lon = 2;
+  void clear_lon();
+  double lon() const;
+  void set_lon(double value);
+  private:
+  double _internal_lon() const;
+  void _internal_set_lon(double value);
+  public:
+
+  // double height = 3;
+  void clear_height();
+  double height() const;
+  void set_height(double value);
+  private:
+  double _internal_height() const;
+  void _internal_set_height(double value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Env.Goal)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  double lat_;
+  double lon_;
+  double height_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_aimodel_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Env final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Env) */ {
  public:
@@ -800,7 +958,7 @@ class Env final :
                &_Env_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(Env& a, Env& b) {
     a.Swap(&b);
@@ -863,18 +1021,21 @@ class Env final :
 
   typedef Env_Entity Entity;
   typedef Env_Missle Missle;
+  typedef Env_Goal Goal;
 
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSelfFieldNumber = 3,
-    kMissleFieldNumber = 5,
-    kEnemyFieldNumber = 6,
-    kRewardFieldNumber = 1,
-    kDoneFieldNumber = 2,
-    kNumWpnFieldNumber = 4,
+    kSelfFieldNumber = 4,
+    kGoalFieldNumber = 6,
+    kEnemyFieldNumber = 7,
+    kMissleFieldNumber = 8,
+    kRedCrashFieldNumber = 1,
+    kBlueCrashFieldNumber = 2,
+    kRadarOnFieldNumber = 3,
+    kNumWpnFieldNumber = 5,
   };
-  // .Env.Entity self = 3;
+  // .Env.Entity self = 4;
   bool has_self() const;
   private:
   bool _internal_has_self() const;
@@ -892,25 +1053,25 @@ class Env final :
       ::Env_Entity* self);
   ::Env_Entity* unsafe_arena_release_self();
 
-  // .Env.Missle missle = 5;
-  bool has_missle() const;
+  // .Env.Goal goal = 6;
+  bool has_goal() const;
   private:
-  bool _internal_has_missle() const;
+  bool _internal_has_goal() const;
   public:
-  void clear_missle();
-  const ::Env_Missle& missle() const;
-  PROTOBUF_FUTURE_MUST_USE_RESULT ::Env_Missle* release_missle();
-  ::Env_Missle* mutable_missle();
-  void set_allocated_missle(::Env_Missle* missle);
+  void clear_goal();
+  const ::Env_Goal& goal() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Env_Goal* release_goal();
+  ::Env_Goal* mutable_goal();
+  void set_allocated_goal(::Env_Goal* goal);
   private:
-  const ::Env_Missle& _internal_missle() const;
-  ::Env_Missle* _internal_mutable_missle();
+  const ::Env_Goal& _internal_goal() const;
+  ::Env_Goal* _internal_mutable_goal();
   public:
-  void unsafe_arena_set_allocated_missle(
-      ::Env_Missle* missle);
-  ::Env_Missle* unsafe_arena_release_missle();
+  void unsafe_arena_set_allocated_goal(
+      ::Env_Goal* goal);
+  ::Env_Goal* unsafe_arena_release_goal();
 
-  // .Env.Entity enemy = 6;
+  // .Env.Entity enemy = 7;
   bool has_enemy() const;
   private:
   bool _internal_has_enemy() const;
@@ -928,25 +1089,52 @@ class Env final :
       ::Env_Entity* enemy);
   ::Env_Entity* unsafe_arena_release_enemy();
 
-  // double reward = 1;
-  void clear_reward();
-  double reward() const;
-  void set_reward(double value);
+  // .Env.Missle missle = 8;
+  bool has_missle() const;
   private:
-  double _internal_reward() const;
-  void _internal_set_reward(double value);
+  bool _internal_has_missle() const;
+  public:
+  void clear_missle();
+  const ::Env_Missle& missle() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Env_Missle* release_missle();
+  ::Env_Missle* mutable_missle();
+  void set_allocated_missle(::Env_Missle* missle);
+  private:
+  const ::Env_Missle& _internal_missle() const;
+  ::Env_Missle* _internal_mutable_missle();
+  public:
+  void unsafe_arena_set_allocated_missle(
+      ::Env_Missle* missle);
+  ::Env_Missle* unsafe_arena_release_missle();
+
+  // bool red_crash = 1;
+  void clear_red_crash();
+  bool red_crash() const;
+  void set_red_crash(bool value);
+  private:
+  bool _internal_red_crash() const;
+  void _internal_set_red_crash(bool value);
   public:
 
-  // bool done = 2;
-  void clear_done();
-  bool done() const;
-  void set_done(bool value);
+  // bool blue_crash = 2;
+  void clear_blue_crash();
+  bool blue_crash() const;
+  void set_blue_crash(bool value);
   private:
-  bool _internal_done() const;
-  void _internal_set_done(bool value);
+  bool _internal_blue_crash() const;
+  void _internal_set_blue_crash(bool value);
   public:
 
-  // int32 num_wpn = 4;
+  // bool radar_on = 3;
+  void clear_radar_on();
+  bool radar_on() const;
+  void set_radar_on(bool value);
+  private:
+  bool _internal_radar_on() const;
+  void _internal_set_radar_on(bool value);
+  public:
+
+  // int32 num_wpn = 5;
   void clear_num_wpn();
   ::PROTOBUF_NAMESPACE_ID::int32 num_wpn() const;
   void set_num_wpn(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -963,10 +1151,12 @@ class Env final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::Env_Entity* self_;
-  ::Env_Missle* missle_;
+  ::Env_Goal* goal_;
   ::Env_Entity* enemy_;
-  double reward_;
-  bool done_;
+  ::Env_Missle* missle_;
+  bool red_crash_;
+  bool blue_crash_;
+  bool radar_on_;
   ::PROTOBUF_NAMESPACE_ID::int32 num_wpn_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_aimodel_2eproto;
@@ -1017,7 +1207,7 @@ class Action_TrajPoint final :
                &_Action_TrajPoint_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(Action_TrajPoint& a, Action_TrajPoint& b) {
     a.Swap(&b);
@@ -1193,7 +1383,7 @@ class Action final :
                &_Action_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(Action& a, Action& b) {
     a.Swap(&b);
@@ -1774,49 +1964,133 @@ inline void Env_Missle::set_dir(double value) {
 
 // -------------------------------------------------------------------
 
+// Env_Goal
+
+// double lat = 1;
+inline void Env_Goal::clear_lat() {
+  lat_ = 0;
+}
+inline double Env_Goal::_internal_lat() const {
+  return lat_;
+}
+inline double Env_Goal::lat() const {
+  // @@protoc_insertion_point(field_get:Env.Goal.lat)
+  return _internal_lat();
+}
+inline void Env_Goal::_internal_set_lat(double value) {
+  
+  lat_ = value;
+}
+inline void Env_Goal::set_lat(double value) {
+  _internal_set_lat(value);
+  // @@protoc_insertion_point(field_set:Env.Goal.lat)
+}
+
+// double lon = 2;
+inline void Env_Goal::clear_lon() {
+  lon_ = 0;
+}
+inline double Env_Goal::_internal_lon() const {
+  return lon_;
+}
+inline double Env_Goal::lon() const {
+  // @@protoc_insertion_point(field_get:Env.Goal.lon)
+  return _internal_lon();
+}
+inline void Env_Goal::_internal_set_lon(double value) {
+  
+  lon_ = value;
+}
+inline void Env_Goal::set_lon(double value) {
+  _internal_set_lon(value);
+  // @@protoc_insertion_point(field_set:Env.Goal.lon)
+}
+
+// double height = 3;
+inline void Env_Goal::clear_height() {
+  height_ = 0;
+}
+inline double Env_Goal::_internal_height() const {
+  return height_;
+}
+inline double Env_Goal::height() const {
+  // @@protoc_insertion_point(field_get:Env.Goal.height)
+  return _internal_height();
+}
+inline void Env_Goal::_internal_set_height(double value) {
+  
+  height_ = value;
+}
+inline void Env_Goal::set_height(double value) {
+  _internal_set_height(value);
+  // @@protoc_insertion_point(field_set:Env.Goal.height)
+}
+
+// -------------------------------------------------------------------
+
 // Env
 
-// double reward = 1;
-inline void Env::clear_reward() {
-  reward_ = 0;
+// bool red_crash = 1;
+inline void Env::clear_red_crash() {
+  red_crash_ = false;
 }
-inline double Env::_internal_reward() const {
-  return reward_;
+inline bool Env::_internal_red_crash() const {
+  return red_crash_;
 }
-inline double Env::reward() const {
-  // @@protoc_insertion_point(field_get:Env.reward)
-  return _internal_reward();
+inline bool Env::red_crash() const {
+  // @@protoc_insertion_point(field_get:Env.red_crash)
+  return _internal_red_crash();
 }
-inline void Env::_internal_set_reward(double value) {
+inline void Env::_internal_set_red_crash(bool value) {
   
-  reward_ = value;
+  red_crash_ = value;
 }
-inline void Env::set_reward(double value) {
-  _internal_set_reward(value);
-  // @@protoc_insertion_point(field_set:Env.reward)
+inline void Env::set_red_crash(bool value) {
+  _internal_set_red_crash(value);
+  // @@protoc_insertion_point(field_set:Env.red_crash)
 }
 
-// bool done = 2;
-inline void Env::clear_done() {
-  done_ = false;
+// bool blue_crash = 2;
+inline void Env::clear_blue_crash() {
+  blue_crash_ = false;
 }
-inline bool Env::_internal_done() const {
-  return done_;
+inline bool Env::_internal_blue_crash() const {
+  return blue_crash_;
 }
-inline bool Env::done() const {
-  // @@protoc_insertion_point(field_get:Env.done)
-  return _internal_done();
+inline bool Env::blue_crash() const {
+  // @@protoc_insertion_point(field_get:Env.blue_crash)
+  return _internal_blue_crash();
 }
-inline void Env::_internal_set_done(bool value) {
+inline void Env::_internal_set_blue_crash(bool value) {
   
-  done_ = value;
+  blue_crash_ = value;
 }
-inline void Env::set_done(bool value) {
-  _internal_set_done(value);
-  // @@protoc_insertion_point(field_set:Env.done)
+inline void Env::set_blue_crash(bool value) {
+  _internal_set_blue_crash(value);
+  // @@protoc_insertion_point(field_set:Env.blue_crash)
 }
 
-// .Env.Entity self = 3;
+// bool radar_on = 3;
+inline void Env::clear_radar_on() {
+  radar_on_ = false;
+}
+inline bool Env::_internal_radar_on() const {
+  return radar_on_;
+}
+inline bool Env::radar_on() const {
+  // @@protoc_insertion_point(field_get:Env.radar_on)
+  return _internal_radar_on();
+}
+inline void Env::_internal_set_radar_on(bool value) {
+  
+  radar_on_ = value;
+}
+inline void Env::set_radar_on(bool value) {
+  _internal_set_radar_on(value);
+  // @@protoc_insertion_point(field_set:Env.radar_on)
+}
+
+// .Env.Entity self = 4;
 inline bool Env::_internal_has_self() const {
   return this != internal_default_instance() && self_ != nullptr;
 }
@@ -1899,7 +2173,7 @@ inline void Env::set_allocated_self(::Env_Entity* self) {
   // @@protoc_insertion_point(field_set_allocated:Env.self)
 }
 
-// int32 num_wpn = 4;
+// int32 num_wpn = 5;
 inline void Env::clear_num_wpn() {
   num_wpn_ = 0;
 }
@@ -1919,90 +2193,90 @@ inline void Env::set_num_wpn(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:Env.num_wpn)
 }
 
-// .Env.Missle missle = 5;
-inline bool Env::_internal_has_missle() const {
-  return this != internal_default_instance() && missle_ != nullptr;
+// .Env.Goal goal = 6;
+inline bool Env::_internal_has_goal() const {
+  return this != internal_default_instance() && goal_ != nullptr;
 }
-inline bool Env::has_missle() const {
-  return _internal_has_missle();
+inline bool Env::has_goal() const {
+  return _internal_has_goal();
 }
-inline void Env::clear_missle() {
-  if (GetArenaForAllocation() == nullptr && missle_ != nullptr) {
-    delete missle_;
+inline void Env::clear_goal() {
+  if (GetArenaForAllocation() == nullptr && goal_ != nullptr) {
+    delete goal_;
   }
-  missle_ = nullptr;
+  goal_ = nullptr;
 }
-inline const ::Env_Missle& Env::_internal_missle() const {
-  const ::Env_Missle* p = missle_;
-  return p != nullptr ? *p : reinterpret_cast<const ::Env_Missle&>(
-      ::_Env_Missle_default_instance_);
+inline const ::Env_Goal& Env::_internal_goal() const {
+  const ::Env_Goal* p = goal_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Env_Goal&>(
+      ::_Env_Goal_default_instance_);
 }
-inline const ::Env_Missle& Env::missle() const {
-  // @@protoc_insertion_point(field_get:Env.missle)
-  return _internal_missle();
+inline const ::Env_Goal& Env::goal() const {
+  // @@protoc_insertion_point(field_get:Env.goal)
+  return _internal_goal();
 }
-inline void Env::unsafe_arena_set_allocated_missle(
-    ::Env_Missle* missle) {
+inline void Env::unsafe_arena_set_allocated_goal(
+    ::Env_Goal* goal) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(missle_);
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(goal_);
   }
-  missle_ = missle;
-  if (missle) {
+  goal_ = goal;
+  if (goal) {
     
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Env.missle)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Env.goal)
 }
-inline ::Env_Missle* Env::release_missle() {
+inline ::Env_Goal* Env::release_goal() {
   
-  ::Env_Missle* temp = missle_;
-  missle_ = nullptr;
+  ::Env_Goal* temp = goal_;
+  goal_ = nullptr;
   if (GetArenaForAllocation() != nullptr) {
     temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
   }
   return temp;
 }
-inline ::Env_Missle* Env::unsafe_arena_release_missle() {
-  // @@protoc_insertion_point(field_release:Env.missle)
+inline ::Env_Goal* Env::unsafe_arena_release_goal() {
+  // @@protoc_insertion_point(field_release:Env.goal)
   
-  ::Env_Missle* temp = missle_;
-  missle_ = nullptr;
+  ::Env_Goal* temp = goal_;
+  goal_ = nullptr;
   return temp;
 }
-inline ::Env_Missle* Env::_internal_mutable_missle() {
+inline ::Env_Goal* Env::_internal_mutable_goal() {
   
-  if (missle_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Env_Missle>(GetArenaForAllocation());
-    missle_ = p;
+  if (goal_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Env_Goal>(GetArenaForAllocation());
+    goal_ = p;
   }
-  return missle_;
+  return goal_;
 }
-inline ::Env_Missle* Env::mutable_missle() {
-  // @@protoc_insertion_point(field_mutable:Env.missle)
-  return _internal_mutable_missle();
+inline ::Env_Goal* Env::mutable_goal() {
+  // @@protoc_insertion_point(field_mutable:Env.goal)
+  return _internal_mutable_goal();
 }
-inline void Env::set_allocated_missle(::Env_Missle* missle) {
+inline void Env::set_allocated_goal(::Env_Goal* goal) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete missle_;
+    delete goal_;
   }
-  if (missle) {
+  if (goal) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::Env_Missle>::GetOwningArena(missle);
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::Env_Goal>::GetOwningArena(goal);
     if (message_arena != submessage_arena) {
-      missle = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, missle, submessage_arena);
+      goal = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, goal, submessage_arena);
     }
     
   } else {
     
   }
-  missle_ = missle;
-  // @@protoc_insertion_point(field_set_allocated:Env.missle)
+  goal_ = goal;
+  // @@protoc_insertion_point(field_set_allocated:Env.goal)
 }
 
-// .Env.Entity enemy = 6;
+// .Env.Entity enemy = 7;
 inline bool Env::_internal_has_enemy() const {
   return this != internal_default_instance() && enemy_ != nullptr;
 }
@@ -2083,6 +2357,89 @@ inline void Env::set_allocated_enemy(::Env_Entity* enemy) {
   }
   enemy_ = enemy;
   // @@protoc_insertion_point(field_set_allocated:Env.enemy)
+}
+
+// .Env.Missle missle = 8;
+inline bool Env::_internal_has_missle() const {
+  return this != internal_default_instance() && missle_ != nullptr;
+}
+inline bool Env::has_missle() const {
+  return _internal_has_missle();
+}
+inline void Env::clear_missle() {
+  if (GetArenaForAllocation() == nullptr && missle_ != nullptr) {
+    delete missle_;
+  }
+  missle_ = nullptr;
+}
+inline const ::Env_Missle& Env::_internal_missle() const {
+  const ::Env_Missle* p = missle_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Env_Missle&>(
+      ::_Env_Missle_default_instance_);
+}
+inline const ::Env_Missle& Env::missle() const {
+  // @@protoc_insertion_point(field_get:Env.missle)
+  return _internal_missle();
+}
+inline void Env::unsafe_arena_set_allocated_missle(
+    ::Env_Missle* missle) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(missle_);
+  }
+  missle_ = missle;
+  if (missle) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Env.missle)
+}
+inline ::Env_Missle* Env::release_missle() {
+  
+  ::Env_Missle* temp = missle_;
+  missle_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Env_Missle* Env::unsafe_arena_release_missle() {
+  // @@protoc_insertion_point(field_release:Env.missle)
+  
+  ::Env_Missle* temp = missle_;
+  missle_ = nullptr;
+  return temp;
+}
+inline ::Env_Missle* Env::_internal_mutable_missle() {
+  
+  if (missle_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Env_Missle>(GetArenaForAllocation());
+    missle_ = p;
+  }
+  return missle_;
+}
+inline ::Env_Missle* Env::mutable_missle() {
+  // @@protoc_insertion_point(field_mutable:Env.missle)
+  return _internal_mutable_missle();
+}
+inline void Env::set_allocated_missle(::Env_Missle* missle) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete missle_;
+  }
+  if (missle) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::Env_Missle>::GetOwningArena(missle);
+    if (message_arena != submessage_arena) {
+      missle = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, missle, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  missle_ = missle;
+  // @@protoc_insertion_point(field_set_allocated:Env.missle)
 }
 
 // -------------------------------------------------------------------
@@ -2339,6 +2696,8 @@ inline void Action::set_target_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

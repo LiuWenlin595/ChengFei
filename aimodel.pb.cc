@@ -75,13 +75,29 @@ struct Env_MissleDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT Env_MissleDefaultTypeInternal _Env_Missle_default_instance_;
+constexpr Env_Goal::Env_Goal(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : lat_(0)
+  , lon_(0)
+  , height_(0){}
+struct Env_GoalDefaultTypeInternal {
+  constexpr Env_GoalDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~Env_GoalDefaultTypeInternal() {}
+  union {
+    Env_Goal _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT Env_GoalDefaultTypeInternal _Env_Goal_default_instance_;
 constexpr Env::Env(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : self_(nullptr)
-  , missle_(nullptr)
+  , goal_(nullptr)
   , enemy_(nullptr)
-  , reward_(0)
-  , done_(false)
+  , missle_(nullptr)
+  , red_crash_(false)
+  , blue_crash_(false)
+  , radar_on_(false)
   , num_wpn_(0){}
 struct EnvDefaultTypeInternal {
   constexpr EnvDefaultTypeInternal()
@@ -123,7 +139,7 @@ struct ActionDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ActionDefaultTypeInternal _Action_default_instance_;
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_aimodel_2eproto[7];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_aimodel_2eproto[8];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_aimodel_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_aimodel_2eproto = nullptr;
 
@@ -164,16 +180,26 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_aimodel_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::Env_Missle, dist_),
   PROTOBUF_FIELD_OFFSET(::Env_Missle, dir_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Env_Goal, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Env_Goal, lat_),
+  PROTOBUF_FIELD_OFFSET(::Env_Goal, lon_),
+  PROTOBUF_FIELD_OFFSET(::Env_Goal, height_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Env, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::Env, reward_),
-  PROTOBUF_FIELD_OFFSET(::Env, done_),
+  PROTOBUF_FIELD_OFFSET(::Env, red_crash_),
+  PROTOBUF_FIELD_OFFSET(::Env, blue_crash_),
+  PROTOBUF_FIELD_OFFSET(::Env, radar_on_),
   PROTOBUF_FIELD_OFFSET(::Env, self_),
   PROTOBUF_FIELD_OFFSET(::Env, num_wpn_),
-  PROTOBUF_FIELD_OFFSET(::Env, missle_),
+  PROTOBUF_FIELD_OFFSET(::Env, goal_),
   PROTOBUF_FIELD_OFFSET(::Env, enemy_),
+  PROTOBUF_FIELD_OFFSET(::Env, missle_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Action_TrajPoint, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -199,9 +225,10 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 11, -1, sizeof(::Env_Entity_Velocity3D)},
   { 19, -1, sizeof(::Env_Entity)},
   { 27, -1, sizeof(::Env_Missle)},
-  { 35, -1, sizeof(::Env)},
-  { 46, -1, sizeof(::Action_TrajPoint)},
-  { 56, -1, sizeof(::Action)},
+  { 35, -1, sizeof(::Env_Goal)},
+  { 43, -1, sizeof(::Env)},
+  { 56, -1, sizeof(::Action_TrajPoint)},
+  { 66, -1, sizeof(::Action)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -209,33 +236,37 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Env_Entity_Velocity3D_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Env_Entity_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Env_Missle_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Env_Goal_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Env_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Action_TrajPoint_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Action_default_instance_),
 };
 
 const char descriptor_table_protodef_aimodel_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\raimodel.proto\"\262\003\n\003Env\022\016\n\006reward\030\001 \001(\001\022"
-  "\014\n\004done\030\002 \001(\010\022\031\n\004self\030\003 \001(\0132\013.Env.Entity"
-  "\022\017\n\007num_wpn\030\004 \001(\005\022\033\n\006missle\030\005 \001(\0132\013.Env."
-  "Missle\022\032\n\005enemy\030\006 \001(\0132\013.Env.Entity\032\366\001\n\006E"
-  "ntity\022\034\n\003dof\030\001 \001(\0132\017.Env.Entity.Dof\022#\n\003v"
-  "el\030\002 \001(\0132\026.Env.Entity.Velocity3D\022\n\n\002id\030\003"
-  " \001(\005\032X\n\003Dof\022\013\n\003lat\030\001 \001(\001\022\013\n\003lon\030\002 \001(\001\022\016\n"
-  "\006height\030\003 \001(\001\022\013\n\003phi\030\004 \001(\001\022\r\n\005theta\030\005 \001("
-  "\001\022\013\n\003psi\030\006 \001(\001\032C\n\nVelocity3D\022\021\n\tvel_nort"
-  "h\030\001 \001(\001\022\020\n\010vel_east\030\002 \001(\001\022\020\n\010vel_down\030\003 "
-  "\001(\001\032/\n\006Missle\022\n\n\002id\030\001 \001(\005\022\014\n\004dist\030\002 \001(\001\022"
-  "\013\n\003dir\030\003 \001(\001\"\256\001\n\006Action\022\017\n\007isReset\030\001 \001(\010"
-  "\022 \n\005point\030\002 \001(\0132\021.Action.TrajPoint\022\016\n\006de"
-  "ploy\030\003 \001(\010\022\021\n\ttarget_id\030\004 \001(\005\032N\n\tTrajPoi"
-  "nt\022\013\n\003lat\030\001 \001(\001\022\013\n\003lon\030\002 \001(\001\022\t\n\001h\030\003 \001(\001\022"
-  "\013\n\003vel\030\004 \001(\001\022\017\n\007ref_phi\030\005 \001(\001b\006proto3"
+  "\n\raimodel.proto\"\230\004\n\003Env\022\021\n\tred_crash\030\001 \001"
+  "(\010\022\022\n\nblue_crash\030\002 \001(\010\022\020\n\010radar_on\030\003 \001(\010"
+  "\022\031\n\004self\030\004 \001(\0132\013.Env.Entity\022\017\n\007num_wpn\030\005"
+  " \001(\005\022\027\n\004goal\030\006 \001(\0132\t.Env.Goal\022\032\n\005enemy\030\007"
+  " \001(\0132\013.Env.Entity\022\033\n\006missle\030\010 \001(\0132\013.Env."
+  "Missle\032\366\001\n\006Entity\022\034\n\003dof\030\001 \001(\0132\017.Env.Ent"
+  "ity.Dof\022#\n\003vel\030\002 \001(\0132\026.Env.Entity.Veloci"
+  "ty3D\022\n\n\002id\030\003 \001(\005\032X\n\003Dof\022\013\n\003lat\030\001 \001(\001\022\013\n\003"
+  "lon\030\002 \001(\001\022\016\n\006height\030\003 \001(\001\022\013\n\003phi\030\004 \001(\001\022\r"
+  "\n\005theta\030\005 \001(\001\022\013\n\003psi\030\006 \001(\001\032C\n\nVelocity3D"
+  "\022\021\n\tvel_north\030\001 \001(\001\022\020\n\010vel_east\030\002 \001(\001\022\020\n"
+  "\010vel_down\030\003 \001(\001\032/\n\006Missle\022\n\n\002id\030\001 \001(\005\022\014\n"
+  "\004dist\030\002 \001(\001\022\013\n\003dir\030\003 \001(\001\0320\n\004Goal\022\013\n\003lat\030"
+  "\001 \001(\001\022\013\n\003lon\030\002 \001(\001\022\016\n\006height\030\003 \001(\001\"\256\001\n\006A"
+  "ction\022\017\n\007isReset\030\001 \001(\010\022 \n\005point\030\002 \001(\0132\021."
+  "Action.TrajPoint\022\016\n\006deploy\030\003 \001(\010\022\021\n\ttarg"
+  "et_id\030\004 \001(\005\032N\n\tTrajPoint\022\013\n\003lat\030\001 \001(\001\022\013\n"
+  "\003lon\030\002 \001(\001\022\t\n\001h\030\003 \001(\001\022\013\n\003vel\030\004 \001(\001\022\017\n\007re"
+  "f_phi\030\005 \001(\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_aimodel_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_aimodel_2eproto = {
-  false, false, 637, descriptor_table_protodef_aimodel_2eproto, "aimodel.proto", 
-  &descriptor_table_aimodel_2eproto_once, nullptr, 0, 7,
+  false, false, 739, descriptor_table_protodef_aimodel_2eproto, "aimodel.proto", 
+  &descriptor_table_aimodel_2eproto_once, nullptr, 0, 8,
   schemas, file_default_instances, TableStruct_aimodel_2eproto::offsets,
   file_level_metadata_aimodel_2eproto, file_level_enum_descriptors_aimodel_2eproto, file_level_service_descriptors_aimodel_2eproto,
 };
@@ -1317,24 +1348,271 @@ void Env_Missle::InternalSwap(Env_Missle* other) {
 
 // ===================================================================
 
+class Env_Goal::_Internal {
+ public:
+};
+
+Env_Goal::Env_Goal(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:Env.Goal)
+}
+Env_Goal::Env_Goal(const Env_Goal& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&lat_, &from.lat_,
+    static_cast<size_t>(reinterpret_cast<char*>(&height_) -
+    reinterpret_cast<char*>(&lat_)) + sizeof(height_));
+  // @@protoc_insertion_point(copy_constructor:Env.Goal)
+}
+
+void Env_Goal::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&lat_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&height_) -
+    reinterpret_cast<char*>(&lat_)) + sizeof(height_));
+}
+
+Env_Goal::~Env_Goal() {
+  // @@protoc_insertion_point(destructor:Env.Goal)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void Env_Goal::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void Env_Goal::ArenaDtor(void* object) {
+  Env_Goal* _this = reinterpret_cast< Env_Goal* >(object);
+  (void)_this;
+}
+void Env_Goal::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void Env_Goal::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void Env_Goal::Clear() {
+// @@protoc_insertion_point(message_clear_start:Env.Goal)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&lat_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&height_) -
+      reinterpret_cast<char*>(&lat_)) + sizeof(height_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Env_Goal::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // double lat = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9)) {
+          lat_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double lon = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
+          lon_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double height = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
+          height_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* Env_Goal::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Env.Goal)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // double lat = 1;
+  if (!(this->lat() <= 0 && this->lat() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(1, this->_internal_lat(), target);
+  }
+
+  // double lon = 2;
+  if (!(this->lon() <= 0 && this->lon() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_lon(), target);
+  }
+
+  // double height = 3;
+  if (!(this->height() <= 0 && this->height() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_height(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Env.Goal)
+  return target;
+}
+
+size_t Env_Goal::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Env.Goal)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // double lat = 1;
+  if (!(this->lat() <= 0 && this->lat() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double lon = 2;
+  if (!(this->lon() <= 0 && this->lon() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double height = 3;
+  if (!(this->height() <= 0 && this->height() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void Env_Goal::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Env.Goal)
+  GOOGLE_DCHECK_NE(&from, this);
+  const Env_Goal* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Env_Goal>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Env.Goal)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Env.Goal)
+    MergeFrom(*source);
+  }
+}
+
+void Env_Goal::MergeFrom(const Env_Goal& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Env.Goal)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!(from.lat() <= 0 && from.lat() >= 0)) {
+    _internal_set_lat(from._internal_lat());
+  }
+  if (!(from.lon() <= 0 && from.lon() >= 0)) {
+    _internal_set_lon(from._internal_lon());
+  }
+  if (!(from.height() <= 0 && from.height() >= 0)) {
+    _internal_set_height(from._internal_height());
+  }
+}
+
+void Env_Goal::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Env.Goal)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Env_Goal::CopyFrom(const Env_Goal& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Env.Goal)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Env_Goal::IsInitialized() const {
+  return true;
+}
+
+void Env_Goal::InternalSwap(Env_Goal* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Env_Goal, height_)
+      + sizeof(Env_Goal::height_)
+      - PROTOBUF_FIELD_OFFSET(Env_Goal, lat_)>(
+          reinterpret_cast<char*>(&lat_),
+          reinterpret_cast<char*>(&other->lat_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Env_Goal::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_aimodel_2eproto_getter, &descriptor_table_aimodel_2eproto_once,
+      file_level_metadata_aimodel_2eproto[4]);
+}
+
+// ===================================================================
+
 class Env::_Internal {
  public:
   static const ::Env_Entity& self(const Env* msg);
-  static const ::Env_Missle& missle(const Env* msg);
+  static const ::Env_Goal& goal(const Env* msg);
   static const ::Env_Entity& enemy(const Env* msg);
+  static const ::Env_Missle& missle(const Env* msg);
 };
 
 const ::Env_Entity&
 Env::_Internal::self(const Env* msg) {
   return *msg->self_;
 }
-const ::Env_Missle&
-Env::_Internal::missle(const Env* msg) {
-  return *msg->missle_;
+const ::Env_Goal&
+Env::_Internal::goal(const Env* msg) {
+  return *msg->goal_;
 }
 const ::Env_Entity&
 Env::_Internal::enemy(const Env* msg) {
   return *msg->enemy_;
+}
+const ::Env_Missle&
+Env::_Internal::missle(const Env* msg) {
+  return *msg->missle_;
 }
 Env::Env(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
@@ -1350,19 +1628,24 @@ Env::Env(const Env& from)
   } else {
     self_ = nullptr;
   }
-  if (from._internal_has_missle()) {
-    missle_ = new ::Env_Missle(*from.missle_);
+  if (from._internal_has_goal()) {
+    goal_ = new ::Env_Goal(*from.goal_);
   } else {
-    missle_ = nullptr;
+    goal_ = nullptr;
   }
   if (from._internal_has_enemy()) {
     enemy_ = new ::Env_Entity(*from.enemy_);
   } else {
     enemy_ = nullptr;
   }
-  ::memcpy(&reward_, &from.reward_,
+  if (from._internal_has_missle()) {
+    missle_ = new ::Env_Missle(*from.missle_);
+  } else {
+    missle_ = nullptr;
+  }
+  ::memcpy(&red_crash_, &from.red_crash_,
     static_cast<size_t>(reinterpret_cast<char*>(&num_wpn_) -
-    reinterpret_cast<char*>(&reward_)) + sizeof(num_wpn_));
+    reinterpret_cast<char*>(&red_crash_)) + sizeof(num_wpn_));
   // @@protoc_insertion_point(copy_constructor:Env)
 }
 
@@ -1382,8 +1665,9 @@ Env::~Env() {
 void Env::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete self_;
-  if (this != internal_default_instance()) delete missle_;
+  if (this != internal_default_instance()) delete goal_;
   if (this != internal_default_instance()) delete enemy_;
+  if (this != internal_default_instance()) delete missle_;
 }
 
 void Env::ArenaDtor(void* object) {
@@ -1406,17 +1690,21 @@ void Env::Clear() {
     delete self_;
   }
   self_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && missle_ != nullptr) {
-    delete missle_;
+  if (GetArenaForAllocation() == nullptr && goal_ != nullptr) {
+    delete goal_;
   }
-  missle_ = nullptr;
+  goal_ = nullptr;
   if (GetArenaForAllocation() == nullptr && enemy_ != nullptr) {
     delete enemy_;
   }
   enemy_ = nullptr;
-  ::memset(&reward_, 0, static_cast<size_t>(
+  if (GetArenaForAllocation() == nullptr && missle_ != nullptr) {
+    delete missle_;
+  }
+  missle_ = nullptr;
+  ::memset(&red_crash_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&num_wpn_) -
-      reinterpret_cast<char*>(&reward_)) + sizeof(num_wpn_));
+      reinterpret_cast<char*>(&red_crash_)) + sizeof(num_wpn_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1426,45 +1714,59 @@ const char* Env::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::intern
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // double reward = 1;
+      // bool red_crash = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9)) {
-          reward_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else goto handle_unusual;
-        continue;
-      // bool done = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          done_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          red_crash_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Env.Entity self = 3;
+      // bool blue_crash = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          blue_crash_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bool radar_on = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          radar_on_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .Env.Entity self = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_self(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 num_wpn = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+      // int32 num_wpn = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
           num_wpn_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Env.Missle missle = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
-          ptr = ctx->ParseMessage(_internal_mutable_missle(), ptr);
+      // .Env.Goal goal = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          ptr = ctx->ParseMessage(_internal_mutable_goal(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Env.Entity enemy = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+      // .Env.Entity enemy = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
           ptr = ctx->ParseMessage(_internal_mutable_enemy(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .Env.Missle missle = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+          ptr = ctx->ParseMessage(_internal_mutable_missle(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1497,46 +1799,60 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // double reward = 1;
-  if (!(this->reward() <= 0 && this->reward() >= 0)) {
+  // bool red_crash = 1;
+  if (this->red_crash() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(1, this->_internal_reward(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_red_crash(), target);
   }
 
-  // bool done = 2;
-  if (this->done() != 0) {
+  // bool blue_crash = 2;
+  if (this->blue_crash() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(2, this->_internal_done(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(2, this->_internal_blue_crash(), target);
   }
 
-  // .Env.Entity self = 3;
+  // bool radar_on = 3;
+  if (this->radar_on() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_radar_on(), target);
+  }
+
+  // .Env.Entity self = 4;
   if (this->has_self()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        3, _Internal::self(this), target, stream);
+        4, _Internal::self(this), target, stream);
   }
 
-  // int32 num_wpn = 4;
+  // int32 num_wpn = 5;
   if (this->num_wpn() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_num_wpn(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->_internal_num_wpn(), target);
   }
 
-  // .Env.Missle missle = 5;
-  if (this->has_missle()) {
+  // .Env.Goal goal = 6;
+  if (this->has_goal()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        5, _Internal::missle(this), target, stream);
+        6, _Internal::goal(this), target, stream);
   }
 
-  // .Env.Entity enemy = 6;
+  // .Env.Entity enemy = 7;
   if (this->has_enemy()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        6, _Internal::enemy(this), target, stream);
+        7, _Internal::enemy(this), target, stream);
+  }
+
+  // .Env.Missle missle = 8;
+  if (this->has_missle()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        8, _Internal::missle(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1555,38 +1871,50 @@ size_t Env::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .Env.Entity self = 3;
+  // .Env.Entity self = 4;
   if (this->has_self()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *self_);
   }
 
-  // .Env.Missle missle = 5;
-  if (this->has_missle()) {
+  // .Env.Goal goal = 6;
+  if (this->has_goal()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *missle_);
+        *goal_);
   }
 
-  // .Env.Entity enemy = 6;
+  // .Env.Entity enemy = 7;
   if (this->has_enemy()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *enemy_);
   }
 
-  // double reward = 1;
-  if (!(this->reward() <= 0 && this->reward() >= 0)) {
-    total_size += 1 + 8;
+  // .Env.Missle missle = 8;
+  if (this->has_missle()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *missle_);
   }
 
-  // bool done = 2;
-  if (this->done() != 0) {
+  // bool red_crash = 1;
+  if (this->red_crash() != 0) {
     total_size += 1 + 1;
   }
 
-  // int32 num_wpn = 4;
+  // bool blue_crash = 2;
+  if (this->blue_crash() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool radar_on = 3;
+  if (this->radar_on() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // int32 num_wpn = 5;
   if (this->num_wpn() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
@@ -1627,17 +1955,23 @@ void Env::MergeFrom(const Env& from) {
   if (from.has_self()) {
     _internal_mutable_self()->::Env_Entity::MergeFrom(from._internal_self());
   }
-  if (from.has_missle()) {
-    _internal_mutable_missle()->::Env_Missle::MergeFrom(from._internal_missle());
+  if (from.has_goal()) {
+    _internal_mutable_goal()->::Env_Goal::MergeFrom(from._internal_goal());
   }
   if (from.has_enemy()) {
     _internal_mutable_enemy()->::Env_Entity::MergeFrom(from._internal_enemy());
   }
-  if (!(from.reward() <= 0 && from.reward() >= 0)) {
-    _internal_set_reward(from._internal_reward());
+  if (from.has_missle()) {
+    _internal_mutable_missle()->::Env_Missle::MergeFrom(from._internal_missle());
   }
-  if (from.done() != 0) {
-    _internal_set_done(from._internal_done());
+  if (from.red_crash() != 0) {
+    _internal_set_red_crash(from._internal_red_crash());
+  }
+  if (from.blue_crash() != 0) {
+    _internal_set_blue_crash(from._internal_blue_crash());
+  }
+  if (from.radar_on() != 0) {
+    _internal_set_radar_on(from._internal_radar_on());
   }
   if (from.num_wpn() != 0) {
     _internal_set_num_wpn(from._internal_num_wpn());
@@ -1676,7 +2010,7 @@ void Env::InternalSwap(Env* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Env::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_aimodel_2eproto_getter, &descriptor_table_aimodel_2eproto_once,
-      file_level_metadata_aimodel_2eproto[4]);
+      file_level_metadata_aimodel_2eproto[5]);
 }
 
 // ===================================================================
@@ -1960,7 +2294,7 @@ void Action_TrajPoint::InternalSwap(Action_TrajPoint* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Action_TrajPoint::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_aimodel_2eproto_getter, &descriptor_table_aimodel_2eproto_once,
-      file_level_metadata_aimodel_2eproto[5]);
+      file_level_metadata_aimodel_2eproto[6]);
 }
 
 // ===================================================================
@@ -2244,7 +2578,7 @@ void Action::InternalSwap(Action* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Action::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_aimodel_2eproto_getter, &descriptor_table_aimodel_2eproto_once,
-      file_level_metadata_aimodel_2eproto[6]);
+      file_level_metadata_aimodel_2eproto[7]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -2260,6 +2594,9 @@ template<> PROTOBUF_NOINLINE ::Env_Entity* Arena::CreateMaybeMessage< ::Env_Enti
 }
 template<> PROTOBUF_NOINLINE ::Env_Missle* Arena::CreateMaybeMessage< ::Env_Missle >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Env_Missle >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Env_Goal* Arena::CreateMaybeMessage< ::Env_Goal >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Env_Goal >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Env* Arena::CreateMaybeMessage< ::Env >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Env >(arena);

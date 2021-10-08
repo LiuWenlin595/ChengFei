@@ -14,7 +14,7 @@ message Env{
 			double vel_north = 1;
 			double vel_east = 2;
 			double vel_down = 3;
-		}
+		}	
 		Dof dof = 1;
 		Velocity3D vel = 2;
 		int32 id = 3;
@@ -24,14 +24,20 @@ message Env{
 		double dist = 2;
 		double dir = 3;
 	}
+	message Goal{
+		double lat = 1;
+		double lon = 2;
+		double height = 3;
+	}
+	bool red_crash = 1;
+	bool blue_crash = 2;
+	bool radar_on = 3;
 
-	double reward = 1;
-	bool done = 2;
-
-	Entity self = 3;
-	int32 num_wpn = 4;
-	Missle missle = 5;
-	Entity enemy = 6;
+	Entity self = 4;
+	int32 num_wpn = 5;
+	Goal goal = 6;
+	Entity enemy = 7;
+	Missle missle = 8;	
 }
 
 

@@ -47,7 +47,8 @@ public:
 	bool target_attacked; // 是否发射出导弹
 
 	TacThreatingMissile g_threat; // 导弹信息
-	bool g_done;				  // 是否该局结束
+	bool red_crash;				// 红方是否被击中
+	bool blue_crash;			// 蓝方是否被击中
 	//int periodCount;	// 输出文件判断是否C++在运行
 
 	bool FIRST; // 是否是开局第一帧
@@ -71,7 +72,8 @@ public:
 	MyAiModelWrapper() : send_msg("World")
 	{
 		FIRST = true;
-		g_done = false;
+		red_crash = false;
+		blue_crash = false;
 
 		radar_on = false;
 		trjpoint_set = false;
@@ -100,7 +102,7 @@ public:
 
 	// 南北对飞的逻辑实现。
 	// 在任务设计上，我们可以把敌我态势设置为双方经度相近。
-	// 这样，通过对飞，可以实现接近、雷达发现的模拟。
+	// 这样，通过对飞，可以实现接近、雷达发现的模拟。 没有被用到
 	void flat_flight(TacSdkSituationUpdate *situation)
 	{
 		// 调用TAC-SDK提供的轨迹追踪接口，实现对飞。
@@ -123,7 +125,7 @@ public:
 		trjpoint_set = true;
 	}
 
-	// 给定下一个目标点, 但是飞机的下一个飞行位置需要额外计算
+	// 给定下一个目标点, 但是飞机的下一个飞行位置需要额外计算, 没有被用到
 	void goal_flight(TacSdkSituationUpdate *situation, TacSdk6DOF goal)
 	{
 		float interval = 0.1;
@@ -174,8 +176,8 @@ public:
 	Env_Entity *base2entity(TacSdkEntityBaseInfo base)
 	{
 		Env_Entity_Dof *dof = new Env_Entity_Dof();
-		dof->set_lat(base.dof.lat - g_goal_y); // 与目标的差值
-		dof->set_lon(base.dof.lon - g_goal_x);
+		dof->set_lat(base.dof.lat);
+		dof->set_lon(base.dof.lon);
 		dof->set_height(base.dof.height);
 		dof->set_phi(base.dof.phi);
 		dof->set_theta(base.dof.theta);
@@ -194,6 +196,11 @@ public:
 		return self;
 	}
 
+	void reset() {
+		target_reported = false;
+		threat_reported = false;
+	}
+
 	// 根据entity得到env信息
 	Env *get_state_env(TacSdkSituationUpdate *situation)
 	{
@@ -201,8 +208,15 @@ public:
 		Env_Entity *self = base2entity(situation->self.base);
 		env->set_allocated_self(self);
 		env->set_num_wpn(situation->self.num_wpn);
+		env->set_radar_on(true);
 
-		if (situation->target_list.num_enemies > 0)
+		Env_Goal *goal = new Env_Goal();
+		goal->set_lat(g_goal_y);
+		goal->set_lon(g_goal_x);
+		goal->set_height(5500);
+		env->set_allocated_goal(goal);
+
+		if (target_reported)
 		{
 			Env_Entity *enemy = base2entity(situation->target_list.enemies[0]);
 			env->set_allocated_enemy(enemy);
@@ -215,6 +229,11 @@ public:
 			missle->set_dist(g_threat.missile_dist);
 			env->set_allocated_missle(missle);
 		}
+
+		env->set_red_crash(red_crash);
+		env->set_blue_crash(blue_crash);
+
+		reset();
 
 		return env;
 	}
@@ -229,17 +248,10 @@ public:
 		socket.send(zmq::buffer(env_msg), zmq::send_flags::none);
 	}
 
-	// 把加了done和dist的env转成state传给model
+	// 把env转成state传给model
 	void send_step(TacSdkSituationUpdate *situation)
 	{
 		Env *env = get_state_env(situation);
-
-		// reward, done
-		env->set_done(g_done);
-		float lon = situation->self.base.dof.lon;
-		float lat = situation->self.base.dof.lat;
-		float reward = sqrt(pow((lon - g_goal_x) * 1000, 2) + pow((lat - g_goal_y) * 1000, 2));
-		env->set_reward(reward);
 
 		string env_msg;
 		env->SerializeToString(&env_msg);
@@ -466,7 +478,7 @@ public:
 
 			//out << "blue period: " << periodCount << std::endl;
 
-			if (g_done)
+			if (blue_crash)
 			{
 				out << "blue crash down !!!" << std::endl;
 			}
@@ -536,10 +548,9 @@ public:
 		//attack(situation);
 	};
 
-	// 1v1攻击
+	// 1v1攻击, 目前没有被用到
 	void attack(TacSdkSituationUpdate *situation)
 	{
-		static int last_num = -1;
 		if (!is_redgrp())
 		{
 			//模拟红方攻击蓝方
@@ -579,7 +590,12 @@ public:
 	//TacSdkAiRet notify_combat_finished() {
 	void notify_combat_finished()
 	{
-		g_done = true;
+		if (is_redgrp()) {
+			red_crash = true;
+		}
+		else {
+			blue_crash = true;
+		}
 	}
 
 	// 打开雷达
@@ -595,19 +611,9 @@ public:
 		radar_on = true;
 	}
 
-	// 发现敌机并选定攻击目标, 只能攻击一次
+	// 发现敌机并选定攻击目标
 	void target_found(TacSdkTargetList *tgt)
 	{
-		if (target_reported)
-		{
-			return;
-		}
-		// 发现简单攻击
-		if (tgt->num_enemies > 0 && !target_reported)
-		{
-			target_reported = true;
-		}
-
 		// 选定目标和攻击武器
 		for (int i = 0; i < tgt->num_enemies; i++)
 		{
@@ -615,6 +621,7 @@ public:
 			tac_entity->TargetSelect(tac_entity, true, enemyid,
 									 self.wpn_list[0].wpn_id);
 		}
+		target_reported = true;
 	}
 
 	// 发现威胁的处理

@@ -301,30 +301,30 @@ public:
 
 				if (self.base.dof.lon < BlueX - 0.5)
 				{ // 左侧
-					std::cout << "左侧" << std::endl;
+					out << "左侧" << std::endl;
 					g_goal_x = BlueX + fabs(deltax);
 					g_goal_y = BlueY + deltay;
 				}
 				else if (self.base.dof.lon > BlueX + 0.5)
 				{ // 右侧
-					std::cout << "右侧" << std::endl;
+					out << "右侧" << std::endl;
 					g_goal_x = BlueX - fabs(deltax);
 					g_goal_y = BlueY + deltay;
 				}
 				else if (self.base.dof.lat > BlueY + 0.5)
 				{ // 上方
-					std::cout << "上方" << std::endl;
+					out << "上方" << std::endl;
 					g_goal_x = BlueX + deltax;
 					g_goal_y = BlueY - fabs(deltay);
 				}
 				else
 				{
-					std::cout << "下方" << std::endl;
+					out << "下方" << std::endl;
 					g_goal_x = BlueX + deltax;
 					g_goal_y = BlueY + fabs(deltay);
 				}
-				std::cout << "delta：（" << deltax << ", " << deltay << "）" << std::endl;
-				std::cout << "目标点：（" << g_goal_x << ", " << g_goal_y << "）" << std::endl;
+				out << "delta：（" << deltax << ", " << deltay << "）" << std::endl;
+				out << "目标点：（" << g_goal_x << ", " << g_goal_y << "）" << std::endl;
 				FIRST = false;
 			}
 			else
@@ -332,6 +332,7 @@ public:
 				send_step(situation);
 				out << "red send step done ..." << std::endl;
 			}
+			out << "red pos:" << self.base.dof.lat << ", " << self.base.dof.lon << std::endl;
 			socket.recv(request, zmq::recv_flags::none); // 接收action
 			action.ParseFromString(request.to_string());
 
@@ -476,7 +477,7 @@ public:
 			//std::cout << "蓝方角度：" << self.base.dof.phi << ", " << self.base.dof.psi << ", " << self.base.dof.theta << std::endl;
 
 			float dis_blue_goal = sqrt(pow(blue_y - g_goal_y, 2) + pow(blue_x - g_goal_x, 2));
-			std::cout << "蓝方与目标点距离：" << dis_blue_goal << std::endl;
+			//std::cout << "蓝方与目标点距离：" << dis_blue_goal << std::endl;
 			//dis_br = sqrt(pow(blue_lat - red_lat, 2) + pow(blue_lon - red_lon, 2)); // red_lat 和 red_lon
 
 			//out << "blue period: " << periodCount << std::endl;

@@ -98,6 +98,8 @@ constexpr Env::Env(
   , red_crash_(false)
   , blue_crash_(false)
   , radar_on_(false)
+  , detect_enemy_(false)
+  , detect_missle_(false)
   , num_wpn_(0){}
 struct EnvDefaultTypeInternal {
   constexpr EnvDefaultTypeInternal()
@@ -195,6 +197,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_aimodel_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::Env, red_crash_),
   PROTOBUF_FIELD_OFFSET(::Env, blue_crash_),
   PROTOBUF_FIELD_OFFSET(::Env, radar_on_),
+  PROTOBUF_FIELD_OFFSET(::Env, detect_enemy_),
+  PROTOBUF_FIELD_OFFSET(::Env, detect_missle_),
   PROTOBUF_FIELD_OFFSET(::Env, self_),
   PROTOBUF_FIELD_OFFSET(::Env, num_wpn_),
   PROTOBUF_FIELD_OFFSET(::Env, goal_),
@@ -227,8 +231,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 27, -1, sizeof(::Env_Missle)},
   { 35, -1, sizeof(::Env_Goal)},
   { 43, -1, sizeof(::Env)},
-  { 56, -1, sizeof(::Action_TrajPoint)},
-  { 66, -1, sizeof(::Action)},
+  { 58, -1, sizeof(::Action_TrajPoint)},
+  { 68, -1, sizeof(::Action)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -243,29 +247,30 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_aimodel_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\raimodel.proto\"\230\004\n\003Env\022\021\n\tred_crash\030\001 \001"
+  "\n\raimodel.proto\"\305\004\n\003Env\022\021\n\tred_crash\030\001 \001"
   "(\010\022\022\n\nblue_crash\030\002 \001(\010\022\020\n\010radar_on\030\003 \001(\010"
-  "\022\031\n\004self\030\004 \001(\0132\013.Env.Entity\022\017\n\007num_wpn\030\005"
-  " \001(\005\022\027\n\004goal\030\006 \001(\0132\t.Env.Goal\022\032\n\005enemy\030\007"
-  " \001(\0132\013.Env.Entity\022\033\n\006missle\030\010 \001(\0132\013.Env."
-  "Missle\032\366\001\n\006Entity\022\034\n\003dof\030\001 \001(\0132\017.Env.Ent"
-  "ity.Dof\022#\n\003vel\030\002 \001(\0132\026.Env.Entity.Veloci"
-  "ty3D\022\n\n\002id\030\003 \001(\005\032X\n\003Dof\022\013\n\003lat\030\001 \001(\001\022\013\n\003"
-  "lon\030\002 \001(\001\022\016\n\006height\030\003 \001(\001\022\013\n\003phi\030\004 \001(\001\022\r"
-  "\n\005theta\030\005 \001(\001\022\013\n\003psi\030\006 \001(\001\032C\n\nVelocity3D"
-  "\022\021\n\tvel_north\030\001 \001(\001\022\020\n\010vel_east\030\002 \001(\001\022\020\n"
-  "\010vel_down\030\003 \001(\001\032/\n\006Missle\022\n\n\002id\030\001 \001(\005\022\014\n"
-  "\004dist\030\002 \001(\001\022\013\n\003dir\030\003 \001(\001\0320\n\004Goal\022\013\n\003lat\030"
-  "\001 \001(\001\022\013\n\003lon\030\002 \001(\001\022\016\n\006height\030\003 \001(\001\"\256\001\n\006A"
-  "ction\022\017\n\007isReset\030\001 \001(\010\022 \n\005point\030\002 \001(\0132\021."
-  "Action.TrajPoint\022\016\n\006deploy\030\003 \001(\010\022\021\n\ttarg"
-  "et_id\030\004 \001(\005\032N\n\tTrajPoint\022\013\n\003lat\030\001 \001(\001\022\013\n"
-  "\003lon\030\002 \001(\001\022\t\n\001h\030\003 \001(\001\022\013\n\003vel\030\004 \001(\001\022\017\n\007re"
-  "f_phi\030\005 \001(\001b\006proto3"
+  "\022\024\n\014detect_enemy\030\004 \001(\010\022\025\n\rdetect_missle\030"
+  "\005 \001(\010\022\031\n\004self\030\006 \001(\0132\013.Env.Entity\022\017\n\007num_"
+  "wpn\030\007 \001(\005\022\027\n\004goal\030\010 \001(\0132\t.Env.Goal\022\032\n\005en"
+  "emy\030\t \001(\0132\013.Env.Entity\022\033\n\006missle\030\n \001(\0132\013"
+  ".Env.Missle\032\366\001\n\006Entity\022\034\n\003dof\030\001 \001(\0132\017.En"
+  "v.Entity.Dof\022#\n\003vel\030\002 \001(\0132\026.Env.Entity.V"
+  "elocity3D\022\n\n\002id\030\003 \001(\005\032X\n\003Dof\022\013\n\003lat\030\001 \001("
+  "\001\022\013\n\003lon\030\002 \001(\001\022\016\n\006height\030\003 \001(\001\022\013\n\003phi\030\004 "
+  "\001(\001\022\r\n\005theta\030\005 \001(\001\022\013\n\003psi\030\006 \001(\001\032C\n\nVeloc"
+  "ity3D\022\021\n\tvel_north\030\001 \001(\001\022\020\n\010vel_east\030\002 \001"
+  "(\001\022\020\n\010vel_down\030\003 \001(\001\032/\n\006Missle\022\n\n\002id\030\001 \001"
+  "(\005\022\014\n\004dist\030\002 \001(\001\022\013\n\003dir\030\003 \001(\001\0320\n\004Goal\022\013\n"
+  "\003lat\030\001 \001(\001\022\013\n\003lon\030\002 \001(\001\022\016\n\006height\030\003 \001(\001\""
+  "\256\001\n\006Action\022\017\n\007isReset\030\001 \001(\010\022 \n\005point\030\002 \001"
+  "(\0132\021.Action.TrajPoint\022\016\n\006deploy\030\003 \001(\010\022\021\n"
+  "\ttarget_id\030\004 \001(\005\032N\n\tTrajPoint\022\013\n\003lat\030\001 \001"
+  "(\001\022\013\n\003lon\030\002 \001(\001\022\t\n\001h\030\003 \001(\001\022\013\n\003vel\030\004 \001(\001\022"
+  "\017\n\007ref_phi\030\005 \001(\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_aimodel_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_aimodel_2eproto = {
-  false, false, 739, descriptor_table_protodef_aimodel_2eproto, "aimodel.proto", 
+  false, false, 784, descriptor_table_protodef_aimodel_2eproto, "aimodel.proto", 
   &descriptor_table_aimodel_2eproto_once, nullptr, 0, 8,
   schemas, file_default_instances, TableStruct_aimodel_2eproto::offsets,
   file_level_metadata_aimodel_2eproto, file_level_enum_descriptors_aimodel_2eproto, file_level_service_descriptors_aimodel_2eproto,
@@ -1735,37 +1740,51 @@ const char* Env::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::intern
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Env.Entity self = 4;
+      // bool detect_enemy = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          detect_enemy_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bool detect_missle = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          detect_missle_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .Env.Entity self = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
           ptr = ctx->ParseMessage(_internal_mutable_self(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 num_wpn = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+      // int32 num_wpn = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
           num_wpn_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Env.Goal goal = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+      // .Env.Goal goal = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
           ptr = ctx->ParseMessage(_internal_mutable_goal(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Env.Entity enemy = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+      // .Env.Entity enemy = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
           ptr = ctx->ParseMessage(_internal_mutable_enemy(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Env.Missle missle = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+      // .Env.Missle missle = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 82)) {
           ptr = ctx->ParseMessage(_internal_mutable_missle(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
@@ -1817,42 +1836,54 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_radar_on(), target);
   }
 
-  // .Env.Entity self = 4;
+  // bool detect_enemy = 4;
+  if (this->detect_enemy() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_detect_enemy(), target);
+  }
+
+  // bool detect_missle = 5;
+  if (this->detect_missle() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(5, this->_internal_detect_missle(), target);
+  }
+
+  // .Env.Entity self = 6;
   if (this->has_self()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        4, _Internal::self(this), target, stream);
+        6, _Internal::self(this), target, stream);
   }
 
-  // int32 num_wpn = 5;
+  // int32 num_wpn = 7;
   if (this->num_wpn() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->_internal_num_wpn(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(7, this->_internal_num_wpn(), target);
   }
 
-  // .Env.Goal goal = 6;
+  // .Env.Goal goal = 8;
   if (this->has_goal()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        6, _Internal::goal(this), target, stream);
+        8, _Internal::goal(this), target, stream);
   }
 
-  // .Env.Entity enemy = 7;
+  // .Env.Entity enemy = 9;
   if (this->has_enemy()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        7, _Internal::enemy(this), target, stream);
+        9, _Internal::enemy(this), target, stream);
   }
 
-  // .Env.Missle missle = 8;
+  // .Env.Missle missle = 10;
   if (this->has_missle()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        8, _Internal::missle(this), target, stream);
+        10, _Internal::missle(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1871,28 +1902,28 @@ size_t Env::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .Env.Entity self = 4;
+  // .Env.Entity self = 6;
   if (this->has_self()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *self_);
   }
 
-  // .Env.Goal goal = 6;
+  // .Env.Goal goal = 8;
   if (this->has_goal()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *goal_);
   }
 
-  // .Env.Entity enemy = 7;
+  // .Env.Entity enemy = 9;
   if (this->has_enemy()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *enemy_);
   }
 
-  // .Env.Missle missle = 8;
+  // .Env.Missle missle = 10;
   if (this->has_missle()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -1914,7 +1945,17 @@ size_t Env::ByteSizeLong() const {
     total_size += 1 + 1;
   }
 
-  // int32 num_wpn = 5;
+  // bool detect_enemy = 4;
+  if (this->detect_enemy() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool detect_missle = 5;
+  if (this->detect_missle() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // int32 num_wpn = 7;
   if (this->num_wpn() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
@@ -1972,6 +2013,12 @@ void Env::MergeFrom(const Env& from) {
   }
   if (from.radar_on() != 0) {
     _internal_set_radar_on(from._internal_radar_on());
+  }
+  if (from.detect_enemy() != 0) {
+    _internal_set_detect_enemy(from._internal_detect_enemy());
+  }
+  if (from.detect_missle() != 0) {
+    _internal_set_detect_missle(from._internal_detect_missle());
   }
   if (from.num_wpn() != 0) {
     _internal_set_num_wpn(from._internal_num_wpn());

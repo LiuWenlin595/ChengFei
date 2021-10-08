@@ -1026,16 +1026,18 @@ class Env final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSelfFieldNumber = 4,
-    kGoalFieldNumber = 6,
-    kEnemyFieldNumber = 7,
-    kMissleFieldNumber = 8,
+    kSelfFieldNumber = 6,
+    kGoalFieldNumber = 8,
+    kEnemyFieldNumber = 9,
+    kMissleFieldNumber = 10,
     kRedCrashFieldNumber = 1,
     kBlueCrashFieldNumber = 2,
     kRadarOnFieldNumber = 3,
-    kNumWpnFieldNumber = 5,
+    kDetectEnemyFieldNumber = 4,
+    kDetectMissleFieldNumber = 5,
+    kNumWpnFieldNumber = 7,
   };
-  // .Env.Entity self = 4;
+  // .Env.Entity self = 6;
   bool has_self() const;
   private:
   bool _internal_has_self() const;
@@ -1053,7 +1055,7 @@ class Env final :
       ::Env_Entity* self);
   ::Env_Entity* unsafe_arena_release_self();
 
-  // .Env.Goal goal = 6;
+  // .Env.Goal goal = 8;
   bool has_goal() const;
   private:
   bool _internal_has_goal() const;
@@ -1071,7 +1073,7 @@ class Env final :
       ::Env_Goal* goal);
   ::Env_Goal* unsafe_arena_release_goal();
 
-  // .Env.Entity enemy = 7;
+  // .Env.Entity enemy = 9;
   bool has_enemy() const;
   private:
   bool _internal_has_enemy() const;
@@ -1089,7 +1091,7 @@ class Env final :
       ::Env_Entity* enemy);
   ::Env_Entity* unsafe_arena_release_enemy();
 
-  // .Env.Missle missle = 8;
+  // .Env.Missle missle = 10;
   bool has_missle() const;
   private:
   bool _internal_has_missle() const;
@@ -1134,7 +1136,25 @@ class Env final :
   void _internal_set_radar_on(bool value);
   public:
 
-  // int32 num_wpn = 5;
+  // bool detect_enemy = 4;
+  void clear_detect_enemy();
+  bool detect_enemy() const;
+  void set_detect_enemy(bool value);
+  private:
+  bool _internal_detect_enemy() const;
+  void _internal_set_detect_enemy(bool value);
+  public:
+
+  // bool detect_missle = 5;
+  void clear_detect_missle();
+  bool detect_missle() const;
+  void set_detect_missle(bool value);
+  private:
+  bool _internal_detect_missle() const;
+  void _internal_set_detect_missle(bool value);
+  public:
+
+  // int32 num_wpn = 7;
   void clear_num_wpn();
   ::PROTOBUF_NAMESPACE_ID::int32 num_wpn() const;
   void set_num_wpn(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1157,6 +1177,8 @@ class Env final :
   bool red_crash_;
   bool blue_crash_;
   bool radar_on_;
+  bool detect_enemy_;
+  bool detect_missle_;
   ::PROTOBUF_NAMESPACE_ID::int32 num_wpn_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_aimodel_2eproto;
@@ -2090,7 +2112,47 @@ inline void Env::set_radar_on(bool value) {
   // @@protoc_insertion_point(field_set:Env.radar_on)
 }
 
-// .Env.Entity self = 4;
+// bool detect_enemy = 4;
+inline void Env::clear_detect_enemy() {
+  detect_enemy_ = false;
+}
+inline bool Env::_internal_detect_enemy() const {
+  return detect_enemy_;
+}
+inline bool Env::detect_enemy() const {
+  // @@protoc_insertion_point(field_get:Env.detect_enemy)
+  return _internal_detect_enemy();
+}
+inline void Env::_internal_set_detect_enemy(bool value) {
+  
+  detect_enemy_ = value;
+}
+inline void Env::set_detect_enemy(bool value) {
+  _internal_set_detect_enemy(value);
+  // @@protoc_insertion_point(field_set:Env.detect_enemy)
+}
+
+// bool detect_missle = 5;
+inline void Env::clear_detect_missle() {
+  detect_missle_ = false;
+}
+inline bool Env::_internal_detect_missle() const {
+  return detect_missle_;
+}
+inline bool Env::detect_missle() const {
+  // @@protoc_insertion_point(field_get:Env.detect_missle)
+  return _internal_detect_missle();
+}
+inline void Env::_internal_set_detect_missle(bool value) {
+  
+  detect_missle_ = value;
+}
+inline void Env::set_detect_missle(bool value) {
+  _internal_set_detect_missle(value);
+  // @@protoc_insertion_point(field_set:Env.detect_missle)
+}
+
+// .Env.Entity self = 6;
 inline bool Env::_internal_has_self() const {
   return this != internal_default_instance() && self_ != nullptr;
 }
@@ -2173,7 +2235,7 @@ inline void Env::set_allocated_self(::Env_Entity* self) {
   // @@protoc_insertion_point(field_set_allocated:Env.self)
 }
 
-// int32 num_wpn = 5;
+// int32 num_wpn = 7;
 inline void Env::clear_num_wpn() {
   num_wpn_ = 0;
 }
@@ -2193,7 +2255,7 @@ inline void Env::set_num_wpn(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:Env.num_wpn)
 }
 
-// .Env.Goal goal = 6;
+// .Env.Goal goal = 8;
 inline bool Env::_internal_has_goal() const {
   return this != internal_default_instance() && goal_ != nullptr;
 }
@@ -2276,7 +2338,7 @@ inline void Env::set_allocated_goal(::Env_Goal* goal) {
   // @@protoc_insertion_point(field_set_allocated:Env.goal)
 }
 
-// .Env.Entity enemy = 7;
+// .Env.Entity enemy = 9;
 inline bool Env::_internal_has_enemy() const {
   return this != internal_default_instance() && enemy_ != nullptr;
 }
@@ -2359,7 +2421,7 @@ inline void Env::set_allocated_enemy(::Env_Entity* enemy) {
   // @@protoc_insertion_point(field_set_allocated:Env.enemy)
 }
 
-// .Env.Missle missle = 8;
+// .Env.Missle missle = 10;
 inline bool Env::_internal_has_missle() const {
   return this != internal_default_instance() && missle_ != nullptr;
 }

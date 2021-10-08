@@ -216,12 +216,14 @@ public:
 		goal->set_height(5500);
 		env->set_allocated_goal(goal);
 
+		env->set_detect_enemy(target_reported);
 		if (target_reported)
 		{
 			Env_Entity *enemy = base2entity(situation->target_list.enemies[0]);
 			env->set_allocated_enemy(enemy);
 		}
 
+		env->set_detect_missle(threat_reported);
 		if (threat_reported)
 		{
 			Env_Missle *missle = new Env_Missle();

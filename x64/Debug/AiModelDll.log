@@ -1,17 +1,20 @@
 ﻿G:\VS2019\VS2019\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output 目录未以斜杠结尾。  此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Output 目录。
+  aimodel.pb.cc
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\aimodel.pb.cc(936): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\aimodel.pb.cc(1174): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\aimodel.pb.cc(1748): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\aimodel.pb.cc(2405): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
   demodl.cpp
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(69): warning C4305: “初始化”: 从“double”到“float”截断
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(85): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(87): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(88): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(129): warning C4305: “初始化”: 从“double”到“float”截断
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(130): warning C4305: “初始化”: 从“double”到“float”截断
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(141): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(70): warning C4305: “初始化”: 从“double”到“float”截断
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(87): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(89): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(90): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(131): warning C4305: “初始化”: 从“double”到“float”截断
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(132): warning C4305: “初始化”: 从“double”到“float”截断
 f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(143): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(144): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(148): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(239): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(240): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(145): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(146): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(150): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
 f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(454): warning C4305: “初始化”: 从“double”到“float”截断
 f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(455): warning C4305: “初始化”: 从“double”到“float”截断
 f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(456): warning C4305: “初始化”: 从“double”到“float”截断
@@ -19,4 +22,5 @@ f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll
 f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(466): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
 f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(467): warning C4101: “red_y”: 未引用的局部变量
 f:\hit刘文林\a项目\成飞\project\skln_working\demo\aimodeldll_work\demodll.h(467): warning C4101: “red_x”: 未引用的局部变量
+  正在生成代码...
   AiModelDll.vcxproj -> F:\hit刘文林\A项目\成飞\Project\skln_working\SyncData\config_files\tacai\AiModelDll.dll

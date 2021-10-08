@@ -33,6 +33,9 @@ public:
 	void init(){};
 };
 
+bool red_crash = false;  // 全局变量, 红方是否被击中
+bool blue_crash = false;  // 全局变量, 蓝方是否被击中
+
 // 为了对接平台, 对实际的AI模型类进行包装.
 // 也可以直接修改原有AI模型,增加TacSdkEntity数属性.
 class MyAiModelWrapper : public MyAiModel
@@ -47,8 +50,6 @@ public:
 	bool target_attacked; // 是否发射出导弹
 
 	TacThreatingMissile g_threat; // 导弹信息
-	bool red_crash;				// 红方是否被击中
-	bool blue_crash;			// 蓝方是否被击中
 	//int periodCount;	// 输出文件判断是否C++在运行
 
 	bool FIRST; // 是否是开局第一帧
@@ -72,8 +73,6 @@ public:
 	MyAiModelWrapper() : send_msg("World")
 	{
 		FIRST = true;
-		red_crash = false;
-		blue_crash = false;
 
 		radar_on = false;
 		trjpoint_set = false;
@@ -199,6 +198,8 @@ public:
 	void reset() {
 		target_reported = false;
 		threat_reported = false;
+		red_crash = false;
+		blue_crash = false;
 	}
 
 	// 根据entity得到env信息

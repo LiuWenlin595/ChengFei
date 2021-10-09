@@ -255,7 +255,9 @@ public:
 	void send_step(TacSdkSituationUpdate *situation)
 	{
 		Env *env = get_state_env(situation);
-
+		//std::ofstream out("D:\\Project\\out.txt");  // std:ios:app
+		//out << "red send pos:" << env->self().dof().lat() << ", " << env->self().dof().lon() << std::endl;
+		//out.close();
 		string env_msg;
 		env->SerializeToString(&env_msg);
 		socket.send(zmq::buffer(env_msg), zmq::send_flags::none);
@@ -267,7 +269,7 @@ public:
 		// 保存TAC_SDK传入的态势中的本机数据
 		static int cnt = 0; // 间隔
 		static int blue_dir_sign = -1;
-		std::ofstream out("D:\\Project\\out.txt", std::ios::app);
+		std::ofstream out("D:\\Project\\out.txt", std::ios::app); // TODO 
 		self = situation->self;
 
 		// 开启雷达
@@ -299,29 +301,33 @@ public:
 
 				send_state(situation);
 
-				if (self.base.dof.lon < BlueX - 0.5)
+				if (self.base.dof.lon < BlueX - 0.01)
 				{ // 左侧
 					out << "左侧" << std::endl;
 					g_goal_x = BlueX + fabs(deltax);
 					g_goal_y = BlueY + deltay;
 				}
-				else if (self.base.dof.lon > BlueX + 0.5)
+				else if (self.base.dof.lon > BlueX + 0.01)
 				{ // 右侧
 					out << "右侧" << std::endl;
 					g_goal_x = BlueX - fabs(deltax);
 					g_goal_y = BlueY + deltay;
 				}
-				else if (self.base.dof.lat > BlueY + 0.5)
+				else if (self.base.dof.lat > BlueY + 0.01)
 				{ // 上方
 					out << "上方" << std::endl;
 					g_goal_x = BlueX + deltax;
 					g_goal_y = BlueY - fabs(deltay);
 				}
-				else
+				else if (self.base.dof.lat < BlueY - 0.01)
 				{
 					out << "下方" << std::endl;
 					g_goal_x = BlueX + deltax;
 					g_goal_y = BlueY + fabs(deltay);
+				}
+				else {
+					out << "特殊情况" << std::endl;
+					out << self.base.dof.lat << " " << self.base.dof.lon << std::endl;
 				}
 				out << "delta：（" << deltax << ", " << deltay << "）" << std::endl;
 				out << "目标点：（" << g_goal_x << ", " << g_goal_y << "）" << std::endl;
@@ -416,9 +422,9 @@ public:
 			// 蓝方围绕防守区域环飞，注意经纬坐标和长度的单位 和 red红方经纬坐标
 			if (FIRST)
 			{
-				if (self.base.dof.psi < 45)
+				if (self.base.dof.psi < 45 || self.base.dof.psi > 315)
 				{
-					std::cout << "下方" << std::endl;
+					out << "下方" << std::endl;
 					g_goal_x = BlueX + deltax;
 					g_goal_y = BlueY + fabs(deltay);
 					if (deltax < 0)
@@ -426,7 +432,7 @@ public:
 				}
 				else if (self.base.dof.psi < 135)
 				{
-					std::cout << "左侧" << std::endl;
+					out << "左侧" << std::endl;
 					g_goal_x = BlueX + fabs(deltax);
 					g_goal_y = BlueY + deltay;
 					if (deltay > 0)
@@ -434,7 +440,7 @@ public:
 				}
 				else if (self.base.dof.psi < 225)
 				{
-					std::cout << "上方" << std::endl;
+					out << "上方" << std::endl;
 					g_goal_x = BlueX + deltax;
 					g_goal_y = BlueY - fabs(deltay);
 					if (deltax > 0)
@@ -442,15 +448,15 @@ public:
 				}
 				else
 				{
-					std::cout << "右侧" << std::endl;
+					out << "右侧" << std::endl;
 					g_goal_x = BlueX - fabs(deltax);
 					g_goal_y = BlueY + deltay;
 					if (deltay < 0)
 						blue_dir_sign = 1;
 				}
-				std::cout << "delta：（" << deltax << ", " << deltay << "）" << std::endl;
-				std::cout << "目标点：（" << g_goal_x << ", " << g_goal_y << "）" << std::endl;
-				std::cout << "符号：" << blue_dir_sign << std::endl;
+				//std::cout << "delta：（" << deltax << ", " << deltay << "）" << std::endl;
+				//std::cout << "目标点：（" << g_goal_x << ", " << g_goal_y << "）" << std::endl;
+				//std::cout << "符号：" << blue_dir_sign << std::endl;
 				FIRST = false;
 				return;
 			}

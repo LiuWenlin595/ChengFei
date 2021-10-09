@@ -74,8 +74,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetExt>.dll</TargetExt>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);F:\hit刘文林\A项目\成飞\Project\skln_working\DRTSP\common_ss\include\SubSystems;F:\hit刘文林\A项目\成飞\Project\protobuf-3.17.2\src\google;C:\Program Files\protobuf_static\include;C:\Program Files\ZeroMQ\include;C:\Program Files\cppzmq\include</IncludePath>
-    <OutDir>F:\hit刘文林\A项目\成飞\Project\skln_working\SyncData\config_files\tacai</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);D:\Project\skln_working\DRTSP\common_ss\include\SubSystems;D:\Project\protobuf-3.17.2\src\google;C:\Program Files\protobuf_static\include;C:\Program Files\ZeroMQ\include;C:\Program Files\cppzmq\include</IncludePath>
+    <OutDir>D:\Project\skln_working\SyncData\config_files\tacai</OutDir>
     <TargetName>$(ProjectName)</TargetName>
     <LibraryPath>C:\Program Files\protobuf_static\lib;C:\Program Files\ZeroMQ\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

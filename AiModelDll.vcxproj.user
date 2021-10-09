@@ -6,8 +6,8 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommand>E:\Window10\E2\workspace\Project\skln_working\DFS\bin\dfs_asnb_d.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>D:\Project\skln_working\DFS\bin\dfs_asnb_d.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments> -m standalone -u "E:\Window10\E2\workspace\Project\skln_working\SyncData\missions\tac_sdk_test_1v1.msn" -w "C:\skyline\skln_working\DFSWorking\2021-03-08 10.51.34" -c no_ts_log </LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments> -m standalone -u "D:\Project\skln_working\SyncData\missions\tac_sdk_test_1v1.msn" -w "C:\skyline\skln_working\DFSWorking\2021-03-08 10.51.34" -c no_ts_log </LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

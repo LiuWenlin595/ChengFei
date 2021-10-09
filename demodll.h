@@ -269,7 +269,7 @@ public:
 		// 保存TAC_SDK传入的态势中的本机数据
 		static int cnt = 0; // 间隔
 		static int blue_dir_sign = -1;
-		std::ofstream out("D:\\Project\\out.txt", std::ios::app); // TODO 
+		std::ofstream out("D:\\Project\\out.txt", std::ios::app); // TODO 改成覆盖的模式
 		self = situation->self;
 
 		// 开启雷达

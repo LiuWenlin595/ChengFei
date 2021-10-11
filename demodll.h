@@ -299,8 +299,6 @@ public:
 				socket.recv(request, zmq::recv_flags::none); // 接收reset
 				action.ParseFromString(request.to_string());
 
-				send_state(situation);
-
 				if (self.base.dof.lon < BlueX - 0.01)
 				{ // 左侧
 					out << "左侧" << std::endl;
@@ -331,6 +329,7 @@ public:
 				}
 				out << "delta：（" << deltax << ", " << deltay << "）" << std::endl;
 				out << "目标点：（" << g_goal_x << ", " << g_goal_y << "）" << std::endl;
+				send_state(situation);
 				FIRST = false;
 			}
 			else

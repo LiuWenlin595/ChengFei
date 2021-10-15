@@ -50,7 +50,7 @@ public:
 	bool target_attacked; // 是否发射出导弹
 
 	TacThreatingMissile g_threat; // 导弹信息
-	//int periodCount;	// 输出文件判断是否C++在运行
+	int periodCount;	// 输出文件判断是否C++在运行
 
 	bool FIRST; // 是否是开局第一帧
 	zmq::context_t context;
@@ -81,7 +81,7 @@ public:
 		target_attacked = false;
 		last_time = (clock_t)0;
 
-		//periodCount = 0;
+		periodCount = 0;
 
 		e = std::default_random_engine(std::time(0));
 		u = std::uniform_real_distribution<float>(0, 1); // 0~1的均匀分布
@@ -275,7 +275,7 @@ public:
 		// 开启雷达
 		turn_on_radar(tick);
 
-		//periodCount++;
+		periodCount++;
 		if (is_redgrp())
 		{
 			/*红方 - 攻击方*/
@@ -288,7 +288,7 @@ public:
 			Action action;
 			zmq::message_t request;
 
-			//out << "red period:" << periodCount << std::endl;
+			out << "red period:" << periodCount << std::endl;
 			if (FIRST)
 			{
 				context = zmq::context_t{1};
@@ -341,7 +341,7 @@ public:
 			socket.recv(request, zmq::recv_flags::none); // 接收action
 			action.ParseFromString(request.to_string());
 
-			out << "red recv done ..." << std::endl;
+			out << "red recv done ..." << periodCount << std::endl;
 
 			// take action
 			Action_TrajPoint point = action.point();
@@ -483,10 +483,10 @@ public:
 			//std::cout << "蓝方与目标点距离：" << dis_blue_goal << std::endl;
 			//dis_br = sqrt(pow(blue_lat - red_lat, 2) + pow(blue_lon - red_lon, 2)); // red_lat 和 red_lon
 
-			//out << "blue period: " << periodCount << std::endl;
+			out << "blue period: " << periodCount << std::endl;
 
 			float dis_blue_goal = sqrt(pow(blue_y - g_goal_y, 2) + pow(blue_x - g_goal_x, 2));
-
+			/* 
 			// 红方坐标赋值
 			if (situation->target_list.num_enemies > 0) {
 				float red_y = situation->target_list.enemies[0].dof.lat;
@@ -498,7 +498,7 @@ public:
 			else {
 				dis_blue_red = -1;
 			}
-
+			
 			if (dis_blue_red >= 0 && dis_blue_red <= blue_r && dis_blue_goal <= goal_R) {
 				// 蓝方追击红方
 				//std::cout << "追击红方" << std::endl;
@@ -543,6 +543,7 @@ public:
 				goal_flight(situation, goal);
 				out << "blue goal flight ... " << std::endl;
 			}
+			*/
 			//flat_flight(situation);
 		}
 		// 平飞

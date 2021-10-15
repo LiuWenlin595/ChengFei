@@ -124,7 +124,7 @@ public:
 		trjpoint_set = true;
 	}
 
-	// 给定下一个目标点, 但是飞机的下一个飞行位置需要额外计算, 没有被用到
+	// 给定下一个目标点, 得到飞机的下一个飞行位置
 	void goal_flight(TacSdkSituationUpdate *situation, TacSdk6DOF goal)
 	{
 		float interval = 0.1;
@@ -268,7 +268,7 @@ public:
 	{
 		// 保存TAC_SDK传入的态势中的本机数据
 		static int cnt = 0; // 间隔
-		static int blue_dir_sign = -1;
+		static int blue_dir_sign = -1;  // 1是逆时针, -1是顺时针
 		std::ofstream out("D:\\Project\\out.txt", std::ios::app); // TODO 改成覆盖的模式
 		self = situation->self;
 
@@ -470,10 +470,9 @@ public:
 			p.h = 5500;
 			p.vel = 240;
 
-			// 蓝方坐标，红方坐标
+			// 蓝方坐标
 			float blue_y = self.base.dof.lat;
 			float blue_x = self.base.dof.lon;
-			float red_y, red_x;
 			float dis_blue_red = -1;
 
 			//std::cout << "蓝方 delta：（" << deltax << ", " << deltay << "）" << std::endl;
@@ -481,73 +480,69 @@ public:
 			//std::cout << "蓝方坐标：(" << blue_x << ", " << blue_y << ")" << std::endl;
 			//std::cout << "蓝方角度：" << self.base.dof.phi << ", " << self.base.dof.psi << ", " << self.base.dof.theta << std::endl;
 
-			float dis_blue_goal = sqrt(pow(blue_y - g_goal_y, 2) + pow(blue_x - g_goal_x, 2));
 			//std::cout << "蓝方与目标点距离：" << dis_blue_goal << std::endl;
 			//dis_br = sqrt(pow(blue_lat - red_lat, 2) + pow(blue_lon - red_lon, 2)); // red_lat 和 red_lon
 
 			//out << "blue period: " << periodCount << std::endl;
 
-			if (blue_crash)
-			{
-				out << "blue crash down !!!" << std::endl;
+			float dis_blue_goal = sqrt(pow(blue_y - g_goal_y, 2) + pow(blue_x - g_goal_x, 2));
+
+			// 红方坐标赋值
+			if (situation->target_list.num_enemies > 0) {
+				float red_y = situation->target_list.enemies[0].dof.lat;
+				float red_x = situation->target_list.enemies[0].dof.lon;
+				dis_blue_red = sqrt(pow(blue_y - red_y, 2) + pow(blue_x - red_x, 2));
+				//std::cout << "探测到红方 距离：" << dis_blue_red << std::endl;
+				//std::cout << "与圆心距离：" << dis_blue_goal << std::endl;
+			}
+			else {
+				dis_blue_red = -1;
 			}
 
-			//if (situation->target_list.num_enemies > 0) {
-			//	red_y = situation->target_list.enemies[0].dof.lat;
-			//	red_x = situation->target_list.enemies[0].dof.lon;
-			//	dis_blue_red = sqrt(pow(blue_y - red_y, 2) + pow(blue_x - red_x, 2));
-			//	//std::cout << "探测到红方 距离：" << dis_blue_red << std::endl;
-			//	//std::cout << "与圆心距离：" << dis_blue_goal << std::endl;
-			//}
-			//else {
-			//	dis_blue_red = -1;
-			//}
+			if (dis_blue_red >= 0 && dis_blue_red <= blue_r && dis_blue_goal <= goal_R) {
+				// 蓝方追击红方
+				//std::cout << "追击红方" << std::endl;
+				goal_flight(situation, situation->target_list.enemies[0].dof);
+				if (dis_blue_red <= missle_dis && !target_attacked && self.num_wpn > 0){
+					//std::cout << "发射导弹" << std::endl;
+					tac_entity->Deploy(tac_entity,
+						self.wpn_list[0].wpn_id,
+						situation->target_list.enemies[0].id.carrier_id,
+						NULL);
+					target_attacked = true;
+				}
+			}
+			else if (dis_blue_goal > goal_R) {
+				TacSdk6DOF goal;
+				goal.height = 5500;
+				goal.lat = g_goal_y;
+				goal.lon = g_goal_x;
+				std::cout << "蓝方下一目标点：（" << goal.lon << ", " << goal.lat << "）" << std::endl;
+				goal_flight(situation, goal);
+			}
+			else {
+				// 环绕
+				g_goal_x = -121.518;
+				g_goal_y = 36.4035;
+				blue_dir_sign = 1;
 
-			//if (dis_blue_red >= 0 && dis_blue_red <= blue_r && dis_blue_goal <= goal_R) {
-			//	// 蓝方追击红方
-			//	//std::cout << "追击红方" << std::endl;
-			//	goal_flight(situation, situation->target_list.enemies[0].dof);
-			//	if (dis_blue_red <= missle_dis && !target_attacked && self.num_wpn > 0){
-			//		//std::cout << "发射导弹" << std::endl;
-			//		tac_entity->Deploy(tac_entity,
-			//			self.wpn_list[0].wpn_id,
-			//			situation->target_list.enemies[0].id.carrier_id,
-			//			NULL);
-			//		target_attacked = true;
-			//	}
-			//}
-			//else if (dis_blue_goal > goal_R) {
-			//	TacSdk6DOF goal;
-			//	goal.height = 5500;
-			//	goal.lat = g_goal_y;
-			//	goal.lon = g_goal_x;
-			//	std::cout << "蓝方下一目标点：（" << goal.lon << ", " << goal.lat << "）" << std::endl;
-			//	goal_flight(situation, goal);
-			//}
-			//else {
-			// 环绕
-			//g_goal_x = -121.518;
-			//g_goal_y = 36.4035;
-			//blue_dir_sign = 1;
+				float theta = atan2(blue_y - g_goal_y, blue_x - g_goal_x);
+				//std::cout << "theta:" << theta << std::endl;
 
-			//float theta = atan2(blue_y - g_goal_y, blue_x - g_goal_x);
-			////std::cout << "theta:" << theta << std::endl;
+				theta += blue_dir_sign * acos(-1) / 12;
 
-			//theta += blue_dir_sign * acos(-1) / 12;
+				p.lat = g_goal_y + GoalRadius * sin(theta);
+				p.lon = g_goal_x + GoalRadius * cos(theta);
 
-			//p.lat = g_goal_y + GoalRadius * sin(theta);
-			//p.lon = g_goal_x + GoalRadius * cos(theta);
-
-			////std::cout << "环绕 蓝方下一目标点：（" << p.lon << ", " << p.lat << "）" << std::endl;
-			////tac_entity->TrajPointSet(tac_entity, &p);
-			//TacSdk6DOF goal;
-			//goal.height = 5500;
-			//goal.lat = p.lat;
-			//goal.lon = p.lon;
-			//goal_flight(situation, goal);
-			//out << "blue goal flight ... " << std::endl;
-
-			//}
+				//std::cout << "环绕 蓝方下一目标点：（" << p.lon << ", " << p.lat << "）" << std::endl;
+				//tac_entity->TrajPointSet(tac_entity, &p);
+				TacSdk6DOF goal;
+				goal.height = 5500;
+				goal.lat = p.lat;
+				goal.lon = p.lon;
+				goal_flight(situation, goal);
+				out << "blue goal flight ... " << std::endl;
+			}
 			//flat_flight(situation);
 		}
 		// 平飞

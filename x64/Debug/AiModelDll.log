@@ -5,21 +5,21 @@ d:\project\skln_working\demo\aimodeldll_work\aimodel.pb.cc(1179): warning C4244:
 d:\project\skln_working\demo\aimodeldll_work\aimodel.pb.cc(1767): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
 d:\project\skln_working\demo\aimodeldll_work\aimodel.pb.cc(2452): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
   demodl.cpp
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(71): warning C4305: “初始化”: 从“double”到“float”截断
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(86): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(88): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(72): warning C4305: “初始化”: 从“double”到“float”截断
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(87): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
 d:\project\skln_working\demo\aimodeldll_work\demodll.h(89): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(130): warning C4305: “初始化”: 从“double”到“float”截断
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(90): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
 d:\project\skln_working\demo\aimodeldll_work\demodll.h(131): warning C4305: “初始化”: 从“double”到“float”截断
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(142): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(144): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(132): warning C4305: “初始化”: 从“double”到“float”截断
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(143): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
 d:\project\skln_working\demo\aimodeldll_work\demodll.h(145): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(149): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(465): warning C4305: “初始化”: 从“double”到“float”截断
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(466): warning C4305: “初始化”: 从“double”到“float”截断
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(467): warning C4305: “初始化”: 从“double”到“float”截断
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(476): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\project\skln_working\demo\aimodeldll_work\demodll.h(477): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(146): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(150): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(470): warning C4305: “初始化”: 从“double”到“float”截断
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(471): warning C4305: “初始化”: 从“double”到“float”截断
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(472): warning C4305: “初始化”: 从“double”到“float”截断
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(481): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\project\skln_working\demo\aimodeldll_work\demodll.h(482): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   正在生成代码...
     正在创建库 D:\Project\skln_working\SyncData\config_files\tacai\AiModelDll.lib 和对象 D:\Project\skln_working\SyncData\config_files\tacai\AiModelDll.exp
 libprotobufd.lib(any_lite.obj) : warning LNK4099: 未找到 PDB“libprotobuf.pdb”(使用“libprotobufd.lib(any_lite.obj)”或在“D:\Project\skln_working\SyncData\config_files\tacai\libprotobuf.pdb”中寻找)；正在链接对象，如同没有调试信息一样

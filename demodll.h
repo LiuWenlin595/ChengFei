@@ -59,7 +59,7 @@ public:
 	zmq::pollitem_t items[1];
 
 	clock_t last_time, time;
-	const int LOOPTIME = 5;  // 跳帧
+	const int LOOPTIME = 3;  // 跳帧
 
 	const float BlueX = -121.5;
 	const float BlueY = 37;
@@ -67,6 +67,7 @@ public:
 	std::default_random_engine e;
 	std::uniform_real_distribution<float> u;
 	float deltax, deltay, g_goal_x, g_goal_y; // x目标点经度, y目标点纬度
+	TacSdkTrajPoint next_point; //下一个要飞的目标点
 
 	float GoalRadius = 0.1; // 防守环飞半径 r = 0.1
 
@@ -216,9 +217,16 @@ public:
 		goal->set_lon(g_goal_x);
 		goal->set_height(5500);
 		env->set_allocated_goal(goal);
-
-		env->set_detect_enemy(target_reported);
-		if (target_reported)
+		
+		bool flag = false;
+		if (situation->target_list.num_enemies > 0) {
+			flag = true;
+			std::ofstream out("D:\\Project\\out.txt", std::ios::app);
+			out << "hunky situation enemies" << std::endl;
+		}
+		// target_reported
+		env->set_detect_enemy(flag);
+		if (flag)
 		{
 			Env_Entity *enemy = base2entity(situation->target_list.enemies[0]);
 			env->set_allocated_enemy(enemy);
@@ -278,10 +286,12 @@ public:
 		periodCount++;
 		if (is_redgrp())
 		{
+			out << next_point.lat << " " << next_point.lon << " " << next_point.h << " " << next_point.vel << std::endl;
 			/*红方 - 攻击方*/
 			if (cnt > 0)
 			{
 				cnt--;
+				tac_entity->TrajPointSet(tac_entity, &next_point);
 				return;
 			}
 
@@ -337,23 +347,20 @@ public:
 				send_step(situation);
 				out << "red send step done ..." << periodCount << std::endl;
 			}
-			out << "red pos:" << self.base.dof.lat << ", " << self.base.dof.lon << std::endl;
 			socket.recv(request, zmq::recv_flags::none); // 接收action
 			action.ParseFromString(request.to_string());
 
-			out << "red recv done1 ..." << periodCount << std::endl;
-
 			// take action
 			Action_TrajPoint point = action.point();
-			TacSdkTrajPoint p;
-			p.lon = situation->self.base.dof.lon + point.lon();
-			p.lat = situation->self.base.dof.lat + point.lat();
-			p.ref_phi = situation->self.base.dof.phi;
-			p.ref_phi = 0.0;
-			p.h = 5500;
-			p.vel = 250;
+			next_point.lon = situation->self.base.dof.lon + point.lon();
+			next_point.lat = situation->self.base.dof.lat + point.lat();
+			next_point.ref_phi = situation->self.base.dof.phi;
+			next_point.ref_phi = 0.0;
+			next_point.h = 5500;
+			next_point.vel = 250;
 
-			tac_entity->TrajPointSet(tac_entity, &p);
+			tac_entity->TrajPointSet(tac_entity, &next_point);
+			out << "red recv done ..." << periodCount << std::endl;
 
 			//if (action.deploy() && self.num_wpn > 0) {
 			//	tac_entity->Deploy(tac_entity,
@@ -362,8 +369,6 @@ public:
 			//		NULL);
 			//}
 			cnt = LOOPTIME;
-
-			out << "red recv done2 ..." << periodCount << std::endl;
 			//flat_flight(situation);
 
 			/*目标定点飞行*/
@@ -628,6 +633,8 @@ public:
 			tac_entity->TargetSelect(tac_entity, true, enemyid,
 									 self.wpn_list[0].wpn_id);
 		}
+		std::ofstream out("D:\\Project\\out.txt", std::ios::app);
+		out << "hunky target_reported, " << tgt->num_enemies << " a " << target_reported << " b" << std::endl;
 		target_reported = true;
 	}
 

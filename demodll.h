@@ -59,7 +59,7 @@ public:
 	zmq::pollitem_t items[1];
 
 	clock_t last_time, time;
-	const int LOOPTIME = 1;
+	const int LOOPTIME = 5;  // 跳帧
 
 	const float BlueX = -121.5;
 	const float BlueY = 37;
@@ -335,13 +335,13 @@ public:
 			else
 			{
 				send_step(situation);
-				out << "red send step done ..." << std::endl;
+				out << "red send step done ..." << periodCount << std::endl;
 			}
 			out << "red pos:" << self.base.dof.lat << ", " << self.base.dof.lon << std::endl;
 			socket.recv(request, zmq::recv_flags::none); // 接收action
 			action.ParseFromString(request.to_string());
 
-			out << "red recv done ..." << periodCount << std::endl;
+			out << "red recv done1 ..." << periodCount << std::endl;
 
 			// take action
 			Action_TrajPoint point = action.point();
@@ -362,6 +362,8 @@ public:
 			//		NULL);
 			//}
 			cnt = LOOPTIME;
+
+			out << "red recv done2 ..." << periodCount << std::endl;
 			//flat_flight(situation);
 
 			/*目标定点飞行*/

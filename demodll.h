@@ -59,14 +59,14 @@ public:
 	zmq::pollitem_t items[1];
 
 	clock_t last_time, time;
-	const int LOOPTIME = 3;  // 跳帧
+	const int LOOPTIME = 0;  // 跳帧
 
 	const float BlueX = -121.5;
 	const float BlueY = 37;
 
 	std::default_random_engine e;
-	std::uniform_real_distribution<float> u;
-	float deltax, deltay, g_goal_x, g_goal_y; // x目标点经度, y目标点纬度
+	std::uniform_real_distribution<double> u;
+	double deltax, deltay, g_goal_x, g_goal_y; // x目标点经度, y目标点纬度
 	TacSdkTrajPoint next_point; //下一个要飞的目标点
 
 	float GoalRadius = 0.1; // 防守环飞半径 r = 0.1
@@ -85,7 +85,7 @@ public:
 		periodCount = 0;
 
 		e = std::default_random_engine(std::time(0));
-		u = std::uniform_real_distribution<float>(0, 1); // 0~1的均匀分布
+		u = std::uniform_real_distribution<double>(0, 1); // 0~1的均匀分布
 		deltax = u(e) / 2 - 0.25;
 		deltay = u(e) * 1.3333 - 0.66667;
 	}
@@ -250,16 +250,6 @@ public:
 	}
 
 	// 把env转成state传给model
-	void send_state(TacSdkSituationUpdate *situation)
-	{
-		Env *env = get_state_env(situation);
-
-		string env_msg;
-		env->SerializeToString(&env_msg);
-		socket.send(zmq::buffer(env_msg), zmq::send_flags::none);
-	}
-
-	// 把env转成state传给model
 	void send_step(TacSdkSituationUpdate *situation)
 	{
 		Env *env = get_state_env(situation);
@@ -286,11 +276,13 @@ public:
 		periodCount++;
 		if (is_redgrp())
 		{
-			out << next_point.lat << " " << next_point.lon << " " << next_point.h << " " << next_point.vel << std::endl;
 			/*红方 - 攻击方*/
 			if (cnt > 0)
 			{
 				cnt--;
+				out << "red cur_pos " << periodCount << ": " << situation->self.base.dof.lat << " " << situation->self.base.dof.lon << " " << situation->self.base.dof.phi << " " << situation->self.base.dof.theta
+					<< " " << situation->self.base.dof.psi << " " << situation->self.base.vel.vel_north << " " << situation->self.base.vel.vel_east << std::endl;
+				out << "red next_point " << periodCount << ": " << next_point.lat << " " << next_point.lon << " " << next_point.h << " " << next_point.vel << std::endl;
 				tac_entity->TrajPointSet(tac_entity, &next_point);
 				return;
 			}
@@ -298,7 +290,7 @@ public:
 			Action action;
 			zmq::message_t request;
 
-			out << "red period:" << periodCount << std::endl;
+			// out << "red period:" << periodCount << std::endl;
 			if (FIRST)
 			{
 				context = zmq::context_t{1};
@@ -339,7 +331,7 @@ public:
 				}
 				out << "delta：（" << deltax << ", " << deltay << "）" << std::endl;
 				out << "目标点：（" << g_goal_x << ", " << g_goal_y << "）" << std::endl;
-				send_state(situation);
+				send_step(situation);
 				FIRST = false;
 			}
 			else
@@ -352,6 +344,8 @@ public:
 
 			// take action
 			Action_TrajPoint point = action.point();
+			out << "new action: " << point.lat() << " " << point.lon() << std::endl;
+			// TacSdkTrajPoint next_point;
 			next_point.lon = situation->self.base.dof.lon + point.lon();
 			next_point.lat = situation->self.base.dof.lat + point.lat();
 			next_point.ref_phi = situation->self.base.dof.phi;
@@ -359,7 +353,15 @@ public:
 			next_point.h = 5500;
 			next_point.vel = 250;
 
+			// TacSdk6DOF goal;
+			// goal.height = 5500;
+			// goal.lat = next_point.lat;
+			// goal.lon = next_point.lon;
+			// goal_flight(situation, goal);
 			tac_entity->TrajPointSet(tac_entity, &next_point);
+			out << "red cur_pos: " << situation->self.base.dof.lat << " " << situation->self.base.dof.lon << " " << situation->self.base.dof.phi << " " << situation->self.base.dof.theta
+				<< " " << situation->self.base.dof.psi << " " << situation->self.base.vel.vel_north << " " << situation->self.base.vel.vel_east << std::endl;
+			out << "red next_point: " << next_point.lat << " " << next_point.lon << " " << next_point.h << " " << next_point.vel << std::endl;
 			out << "red recv done ..." << periodCount << std::endl;
 
 			//if (action.deploy() && self.num_wpn > 0) {
@@ -493,7 +495,6 @@ public:
 			out << "blue period: " << periodCount << std::endl;
 
 			float dis_blue_goal = sqrt(pow(blue_y - g_goal_y, 2) + pow(blue_x - g_goal_x, 2));
-			/* 
 			// 红方坐标赋值
 			if (situation->target_list.num_enemies > 0) {
 				float red_y = situation->target_list.enemies[0].dof.lat;
@@ -550,7 +551,6 @@ public:
 				goal_flight(situation, goal);
 				out << "blue goal flight ... " << std::endl;
 			}
-			*/
 			//flat_flight(situation);
 		}
 		// 平飞

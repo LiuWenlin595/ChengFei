@@ -35,6 +35,8 @@ TacSdkAiRet _step(TacSdkAi *ai, uint64_t tick_cnt, double interval, TacSdkSituat
 
 	//根据TacSdkSituationUpdate内容,做相应处理.
 	ins->ai_wrapper.step(situation, tick_cnt);
+	// std::ofstream out("D:\\Project\\out.txt", std::ios::app);
+	// out << "step done ..." << std::endl;
 	return TSAIRET_SUCCESS;
 }
 

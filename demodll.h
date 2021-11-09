@@ -59,7 +59,7 @@ public:
 	zmq::pollitem_t items[1];
 
 	clock_t last_time, time;
-	const int LOOPTIME = 0;  // ÌøÖ¡
+	const int LOOPTIME = 100;  // ÌøÖ¡
 
 	const float BlueX = -121.5;
 	const float BlueY = 37;
@@ -280,9 +280,9 @@ public:
 			if (cnt > 0)
 			{
 				cnt--;
-				out << "red cur_pos " << periodCount << ": " << situation->self.base.dof.lat << " " << situation->self.base.dof.lon << " " << situation->self.base.dof.phi << " " << situation->self.base.dof.theta
-					<< " " << situation->self.base.dof.psi << " " << situation->self.base.vel.vel_north << " " << situation->self.base.vel.vel_east << std::endl;
-				out << "red next_point " << periodCount << ": " << next_point.lat << " " << next_point.lon << " " << next_point.h << " " << next_point.vel << std::endl;
+				// out << "red cur_pos " << periodCount << ": " << situation->self.base.dof.lat << " " << situation->self.base.dof.lon << " " << situation->self.base.dof.phi << " " << situation->self.base.dof.theta
+				// 	<< " " << situation->self.base.dof.psi << " " << situation->self.base.vel.vel_north << " " << situation->self.base.vel.vel_east << std::endl;
+				// out << "red next_point " << periodCount << ": " << next_point.lat << " " << next_point.lon << " " << next_point.h << " " << next_point.vel << std::endl;
 				tac_entity->TrajPointSet(tac_entity, &next_point);
 				return;
 			}
@@ -494,6 +494,7 @@ public:
 
 			out << "blue period: " << periodCount << std::endl;
 
+			/*
 			float dis_blue_goal = sqrt(pow(blue_y - g_goal_y, 2) + pow(blue_x - g_goal_x, 2));
 			// ºì·½×ø±ê¸³Öµ
 			if (situation->target_list.num_enemies > 0) {
@@ -551,6 +552,7 @@ public:
 				goal_flight(situation, goal);
 				out << "blue goal flight ... " << std::endl;
 			}
+			*/
 			//flat_flight(situation);
 		}
 		// Æ½·É
